@@ -1,0 +1,1299 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>بسم الله الرحمن الرحیم</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, height=device-height, viewport-fit=cover">
+<link rel="stylesheet" type="text/css" href="css/reset.css">
+<!-- <link rel="stylesheet" type="text/css" href="css/fontiran.css"> -->
+<link rel="stylesheet" type="text/css" href="css/arabic_font.css">
+<link rel="stylesheet" type="text/css" href="css/magnific-popup.css">
+
+<link rel="stylesheet" href="maps/js/leaflet.css" />
+<link rel="stylesheet" href="maps/js/leaflet-search.css" />
+<link rel="stylesheet" href="maps/js/leaflet-routing-machine.css" />
+<link rel="stylesheet" href="maps/js/style.css" />
+
+<script src="cordova.js"></script>
+<script src="js/jquery-3.3.1.min.js"></script>
+<script src="js/fastclick.js"></script>
+<script src="js/back_btn.js"></script>
+<script src="js/persian_number_to_english.js"></script>
+<script src="js/lang.ar.js"></script>
+<script src="js/lang.fa.js"></script>
+<script src="js/lang.en.js"></script>
+<script src="js/jquery.timeago.js"></script>
+<script src="js/jquery.magnific-popup.js"></script>
+<script src="js/jquery.slides.min.js"></script>
+<!--<script src="js/console.log.js"></script>-->
+<style>
+.show_date{display:inline-block;direction:ltr;}
+.show_date_dec{display:inline-block;/*direction:ltr;*/}
+.clickable{text-decoration:underline;color:#3F51B5;}
+.leaflet-top.leaflet-left .leaflet-control.leaflet-control-layers {
+    border: 0px solid transparent;
+    right: 5px;
+    top: 12px;
+}
+.leaflet-control-layers-expanded .leaflet-control-layers-toggle {
+    margin-left: 2px;
+}
+</style>
+<script>
+	var is_it_first_location = true;
+	city_name_list = [];
+	mukeb_type_list = [];
+	if(true)
+	{
+		if(window.localStorage.getItem('language') == "lang_fa")
+		{
+				(function (factory) {
+					if (typeof define === 'function' && define.amd) {
+						define(['jquery'], factory);
+					} else if (typeof module === 'object' && typeof module.exports === 'object') {
+						factory(require('jquery'));
+					} else {
+						factory(jQuery);
+					}
+				}(function (jQuery) {
+					jQuery.timeago.settings.strings = {
+						prefixAgo: null,
+						prefixFromNow: null,
+						suffixAgo: "پیش",
+						suffixFromNow: "از حال",
+						seconds: "کمتر از یک دقیقه",
+						minute: "حدود یک دقیقه",
+						minutes: "%d دقیقه",
+						hour: "حدود یک ساعت",
+						hours: "حدود %d ساعت",
+						day: "یک روز",
+						days: "%d روز",
+						month: "حدود یک ماه",
+						months: "%d ماه",
+						year: "حدود یک سال",
+						years: "%d سال",
+						wordSeparator: " ",
+						numbers: ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹']
+					};
+				}));
+		}
+		else if(window.localStorage.getItem('language') == "lang_ar")
+		{
+				(function (factory) {
+				  if (typeof define === 'function' && define.amd) {
+					define(['jquery'], factory);
+				  } else if (typeof module === 'object' && typeof module.exports === 'object') {
+					factory(require('jquery'));
+				  } else {
+					factory(jQuery);
+				  }
+				}(function (jQuery) {
+				  function numpf(n, a) {
+					return a[plural=n===0 ? 0 : n===1 ? 1 : n===2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 ? 4 : 5];
+				  }
+				  
+				  jQuery.timeago.settings.strings = {
+					prefixAgo: "منذ",
+					prefixFromNow: "بعد",
+					suffixAgo: null,
+					suffixFromNow: null, // null OR "من الآن"
+					second: function(value) { return numpf(value, [
+					  'أقل من ثانية',
+					   'ثانية واحدة',
+					   'ثانيتين',
+					   '%d ثوانٍ',
+					   '%d ثانية',
+					   '%d ثانية']); },
+					seconds: function(value) { return numpf(value, [
+					  'أقل من ثانية',
+					   'ثانية واحدة',
+					   'ثانيتين',
+					   '%d ثوانٍ',
+					   '%d ثانية',
+					   '%d ثانية']); },
+					minute: function(value) { return numpf(value, [
+					  'أقل من دقيقة',
+					   'دقيقة واحدة',
+					   'دقيقتين',
+					   '%d دقائق',
+					   '%d دقيقة',
+					   'دقيقة']); },
+					minutes: function(value) { return numpf(value, [
+					  'أقل من دقيقة',
+					   'دقيقة واحدة',
+					   'دقيقتين',
+					   '%d دقائق',
+					   '%d دقيقة',
+					   'دقيقة']); },
+					hour:  function(value) { return numpf(value, [
+					  'أقل من ساعة',
+					   'ساعة واحدة',
+					   'ساعتين',
+					   '%d ساعات',
+					   '%d ساعة',
+					   '%d ساعة']); },
+					hours: function(value) { return numpf(value, [
+					  'أقل من ساعة',
+					   'ساعة واحدة',
+					   'ساعتين',
+					   '%d ساعات',
+					   '%d ساعة',
+					   '%d ساعة']); },
+					day:  function(value) { return numpf(value, [
+					  'أقل من يوم',
+					   'يوم واحد',
+					   'يومين',
+					   '%d أيام',
+					   '%d يومًا',
+					   '%d يوم']); },
+					days: function(value) { return numpf(value, [
+					  'أقل من يوم',
+					   'يوم واحد',
+					   'يومين',
+					   '%d أيام',
+					   '%d يومًا',
+					   '%d يوم']); },
+					month:  function(value) { return numpf(value, [
+					  'أقل من شهر',
+					   'شهر واحد',
+					   'شهرين',
+					   '%d أشهر',
+					   '%d شهرًا',
+					   '%d شهر']); },
+					months: function(value) { return numpf(value, [
+					  'أقل من شهر',
+					   'شهر واحد',
+					   'شهرين',
+					   '%d أشهر',
+					   '%d شهرًا',
+					   '%d شهر']); },
+					year:  function(value) { return numpf(value,  [
+					  'أقل من عام',
+					   'عام واحد',
+					   '%d عامين',
+					   '%d أعوام',
+					   '%d عامًا']);
+					 },
+					years: function(value) { return numpf(value,  [
+					  'أقل من عام',
+					   'عام واحد',
+					   'عامين',
+					   '%d أعوام',
+					   '%d عامًا',
+					   '%d عام']);}
+				  };
+				}));
+		}
+		function set_body_language(){
+			if(window.localStorage.getItem("language")=="lang_ar")
+			{
+				lang = lang_ar;
+				text_direction = "arabic_text";
+			}
+			else if(window.localStorage.getItem("language")=="lang_en")
+			{
+				lang = lang_en;
+				text_direction = "english_text";
+			}
+			else if(window.localStorage.getItem("language")=="lang_fa")
+			{
+				lang = lang_fa;
+				text_direction = "persian_text";
+			}
+			body = $("body");
+			body.removeClass("english_text");
+			body.removeClass("arabic_text");
+			body.removeClass("persian_text");
+			body.addClass(text_direction);
+		}
+		//set_body_language();
+		if(window.localStorage.getItem('language') == null)
+		{
+			text_direction = "english_text";
+			lang = lang_en;
+		}
+		else
+		{
+			text_direction = window.localStorage.getItem('text_direction');
+			lang = window[window.localStorage.getItem('language')];
+		}
+	}
+	var my_location_gps;
+	function getParameterByName(name) {
+		name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+		var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+			results = regex.exec(location.search);
+		return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+	}
+    $( document ).ready(function() {
+        console.log( "document loaded" );
+		set_body_language();
+		city_name_list = [
+			multilang.get("City_Name"),
+			multilang.get("Karbala"),
+			multilang.get("Najaf"),
+			multilang.get("Kazemein"),
+			multilang.get("From_Najaf_to_Karbala"),
+			multilang.get("From_Kazemein_to_Karbala")
+		];
+		mukeb_type_list = [
+			multilang.get("Mukeb_type_service"),
+			multilang.get("Mukeb_type_azae"),
+		];
+    });
+	function init() {		
+		console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    start init()');
+		//alert("init()");
+		
+		document.addEventListener("deviceready", onDeviceReady, false);
+		radius = 0;
+		my_location_marker = L.marker([32.6163,44.0322], {icon: user_location_icon,zIndexOffset: -100,opacity: 0}).addTo(map);
+		my_location_circle = L.circle([32.6163,44.0322], radius).addTo(map);
+	}
+	
+	function onDeviceReady() {
+		//alert("start onDeviceReady()");
+		console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    start onDeviceReady()');
+		//FastClick.attach(document.getElementById('button'));
+		/*
+		(function(){
+			if(!is_it_first_location)
+			{
+				console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    start getCurrentPosition()');
+				navigator.geolocation.getCurrentPosition(onSuccess, onError);
+			}
+			//console.log("11");
+			setTimeout(arguments.callee, 10000);
+		})();
+		*/
+		navigator.geolocation.getCurrentPosition(onSuccess, onError);
+        //var options = { timeout: 30000 };
+        //watchID = navigator.geolocation.watchPosition(onSuccess, onError, options);
+        watchID = navigator.geolocation.watchPosition(onSuccess, onError);
+		
+		
+		
+		if ( device.platform == 'Android' ){//Android,iOS,win7=WinCE,win8=Win32NT
+			document.addEventListener("backbutton", go_back_from_map, false);
+		}
+		register_notification();
+	}
+	function onSuccess(position) {
+		//alert("start onSuccess()");
+		console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    start onSuccess()');
+		//alert("longitude : " + position.coords.longitude);
+		//alert("latitude  : " + position.coords.latitude );
+		
+		//user_location_icon	= new icon_style_user_location({iconUrl: 'maps/map-icon/user_location.png',iconRetinaUrl: 'maps/map-icon/user_location@2x.png',});
+		radius = (position.coords.accuracy / 2) * 1;
+		//my_location_marker = L.marker([position.coords.latitude,position.coords.longitude], {icon: user_location_icon}).addTo(map).bindPopup("شما در شعاع " + radius + " متری این نقطه هستید");//.openPopup();
+		//my_location_circle = L.circle([position.coords.latitude,position.coords.longitude], radius).addTo(map);
+		if(is_it_first_location)
+		{
+			my_location_marker.setOpacity(1);
+			is_it_first_location = false;
+		}
+		my_location_marker.setLatLng([position.coords.latitude,position.coords.longitude]);
+		//my_location_marker.bindPopup("");//"شما در شعاع " + radius + " متری این نقطه هستید"
+		my_location_circle.setLatLng([position.coords.latitude,position.coords.longitude]);
+		my_location_circle.setRadius(radius);
+		//console.log("00000:" + position.coords);
+		$("#location_btn").addClass("active");
+				
+	}
+	
+	function onError(error) { 
+		// your callback here
+		//alert(JSON.stringify(error));
+	}
+</script>
+</head>
+
+<body onload="init();">
+<div class="preloader"></div>
+<style>.preloader{opacity:1;position:absolute !important;width:100% !important;height:100% !important;background-color:#236586;background-position: center;background-repeat: no-repeat;background-size: cover;background-image2:url('images/pages/bg.png');z-index:214748001 !important;transition:all .7s cubic-bezier(.175,.885,.32,1.275) 0s  !important;animation: unset !important;}.preloader.display_none{display:none  !important;}</style>
+
+	<div id="favorites_btn" class="top_left_smcms_btn" ></div>
+	<div id="wifi_btn" class="top_left_smcms_btn" ></div>
+	<div id="location_btn" class="top_left_smcms_btn" ></div>
+	<div id="routing_btn" class="top_left_smcms_btn" ></div>
+	<div id="map"></div>
+
+	<div class="cd-popup is-visible0 favorites" role="alert">
+		<div class="cd-popup-container">
+			<p class="need_translate_val" translate="Please_enter_the_title_of_the_point"><input id="favorite_title" id="favorite_title" placeholder="لطفا عنوان نقطه مورد نظر را وارد نمایید" /></p>
+			<ul class="cd-buttons">
+				<li><a href="#" onclick="add_to_favorites();" class="need_translate" translate="ok" ></a></li>
+				<li><a href="#" onclick="add_to_favorites_open();" class="need_translate" translate="Cancel"></a></li>
+			</ul>
+			<!--<a href="#0" class="cd-popup-close img-replace">Close</a>-->
+		</div> <!-- cd-popup-container -->
+	</div> <!-- cd-popup -->
+
+	<div class="cd-popup is-visible0 route_from" role="alert">
+		<div class="cd-popup-container">
+			<p class="need_translate" translate="Please_select_the_starting_point_of_the_move" class="need_translate" translate="Please_select_the_starting_point_of_the_move">لطفا مبدا حرکت را انتخاب نمایید</p>
+			<ul class="cd-buttons">
+				<li><a href="#" onclick="routing_to_open();" style="background-color:#247dc9;" class="need_translate" translate="ok">تاييد</a></li>
+				<li><a href="#" onclick="routing_open();" class="need_translate" translate="Cancel">لغو</a></li>
+			</ul>
+			<!--<a href="#0" class="cd-popup-close img-replace">Close</a>-->
+		</div> <!-- cd-popup-container -->
+	</div> <!-- cd-popup -->
+
+	<div class="cd-popup is-visible0 route_to" role="alert">
+		<div class="cd-popup-container">
+			<p class="need_translate" translate="Please_select_the_destination">لطفا مقصد را انتخاب نمایید</p>
+			<ul class="cd-buttons">
+				<li><a href="#" onclick="routinging_start();" style="background-color:#ce3b39;" class="need_translate" translate="ok">تاييد</a></li>
+				<li><a href="#" onclick="routing_open();" class="need_translate" translate="Cancel">لغو</a></li>
+			</ul>
+			<!--<a href="#0" class="cd-popup-close img-replace">Close</a>-->
+		</div> <!-- cd-popup-container -->
+	</div> <!-- cd-popup -->
+
+
+
+<script src="maps/js/leaflet.js"></script>
+<script src="maps/js/leaflet-search.js"></script>
+<script src="maps/js/leaflet-routing-machine.min.js"></script> 
+<script src="maps/js/Control.Geocoder.js"></script>
+
+<script src="maps/js/fuse.min.js"></script>
+<script src="maps/js/points_fa.json"></script>
+<script src="maps/js/points_en.json"></script>
+<script src="maps/js/points_ar.json"></script>
+<script>
+if(window.localStorage.getItem('language') == "lang_fa")
+	restaurant500 = restaurant500_fa;
+else if(window.localStorage.getItem('language') == "lang_en")
+	restaurant500 = restaurant500_en;
+else
+	restaurant500 = restaurant500_ar;
+	
+if(window.sessionStorage.getItem('map_array_fa') != null && window.localStorage.getItem('language') == "lang_fa")
+	restaurant500 = $.parseJSON(window.localStorage.getItem('map_array_fa'));
+else if(window.sessionStorage.getItem('map_array_en') != null && window.localStorage.getItem('language') == "lang_en")
+	restaurant500 = $.parseJSON(window.localStorage.getItem('map_array_en'));
+if(window.sessionStorage.getItem('map_array_ar') != null)
+	restaurant500 = $.parseJSON(window.localStorage.getItem('map_array_ar'));
+
+//console.log("**************************************************************************************");
+//console.log("**************************************************************************************");
+//console.log("**************************************************************************************");
+//console.log("**************************************************************************************");
+//console.log("**************************************************************************************");
+//console.log("**************************************************************************************");
+//console.log("**************************************************************************************");
+//console.log("**************************************************************************************");
+	/*
+	if(window.localStorage.getItem('json_mukeb_list_for_map') != null)
+	{
+		try {
+			//console.log(restaurant500);
+			var mukeb_item = $.parseJSON(window.localStorage.getItem('json_mukeb_list_for_map'));
+			//console.log(mukeb_item.length);
+			for (i = 0; i < mukeb_item.length; ++i) {
+				//console.log(mukeb_item[i]);
+				restaurant500.features.push(mukeb_item[i]);
+			}
+			//console.log(restaurant500);
+			console.log("JSON IS READY");
+		} catch (e) {
+			console.log("NOT JSON");
+		}
+	}
+	*/
+	function show_mukeb_info(counter)
+	{
+		console.log(counter);
+		//try {
+			var mukeb_item = restaurant500.features;//$.parseJSON(window.localStorage.getItem('json_mukeb_list_for_map'));
+			//console.log(mukeb_item[counter]);
+			
+			if(mukeb_item[counter].properties.capacity_last_update	!= "")
+			{
+				var capacity_last_update = mukeb_item[counter].properties.capacity_last_update;
+				capacity_last_update = new Date(capacity_last_update*1000);
+				capacity_last_update = jQuery.timeago(capacity_last_update); 
+			}
+			var text = "";
+			
+			if(mukeb_item[counter].properties.images.length > 0)
+			{
+				server_url_image = window.localStorage.getItem("server_url_image");
+				text += "<div id='slides'>"
+				for (i = 0; i < mukeb_item[counter].properties.images.length; ++i) {
+					text += "<img src='" + server_url_image + "640x480-" + mukeb_item[counter].properties.images[i] + "?parameters=@width=640@height=480@cropratio=true@quality=85@image=/uploads_mukeb/" + mukeb_item[counter].properties.images[i] + "'>";
+				}
+				text += "</div>";
+				text += "<script>$(function(){$('#slides').slidesjs({width: 640,height: 480,play: {active: true,auto: true,interval: 4000,swap: true}});});<\/script>";
+			}
+			
+			if(window.localStorage.getItem('language') == "lang_fa")
+				WIFI_NETWORK_NOTIC = window.localStorage.getItem('WIFI_NETWORK_NOTIC_fa');
+			else if(window.localStorage.getItem('language') == "lang_en")
+				WIFI_NETWORK_NOTIC = window.localStorage.getItem('WIFI_NETWORK_NOTIC_en');
+			else
+				WIFI_NETWORK_NOTIC = window.localStorage.getItem('WIFI_NETWORK_NOTIC_ar');
+
+			text += multilang.get("Mukeb_Name") + " : " + mukeb_item[counter].properties.name + "<br>";
+			text += multilang.get("Tent_manager") + " : " + mukeb_item[counter].properties.mukeb_manager + "<br>";
+			text += ((mukeb_item[counter].properties.capacity_man				== "")  ? WIFI_NETWORK_NOTIC : "");
+			text += ((mukeb_item[counter].properties.capacity_man				!= "")  ? multilang.get("Total_Man_capacity") + " : " + mukeb_item[counter].properties.capacity_man + "<br>" : "");
+			text += ((mukeb_item[counter].properties.capacity_woman				!= "")  ? multilang.get("Total_Woman_capacity") + " : " + mukeb_item[counter].properties.capacity_woman + "<br>" : "");
+			text += ((mukeb_item[counter].properties.capacity_man_remaining		!= "")  ? multilang.get("Remaining_Man_capacity") + " : " + mukeb_item[counter].properties.capacity_man_remaining + "<br>" : "");
+			text += ((mukeb_item[counter].properties.capacity_woman_remaining	!= "")  ? multilang.get("Remaining_Woman_capacity") + " : " + mukeb_item[counter].properties.capacity_woman_remaining + "<br>" : "");
+			text += ((mukeb_item[counter].properties.capacity_last_update		!= "")  ? multilang.get("Last_update_time") + " : " + capacity_last_update + "<br>" : "");
+			text +=  "<hr>";
+			text += ((mukeb_item[counter].properties.Mukeb_type					!= "")  ? multilang.get("Mukeb_type") + " : " + mukeb_type_list[mukeb_item[counter].properties.Mukeb_type] + "<br>" : "");
+			text += ((mukeb_item[counter].properties.Mukeb_state				!= "")  ? multilang.get("Mukeb_state") + " : " + mukeb_item[counter].properties.Mukeb_state + "<br>" : "");
+			text += ((mukeb_item[counter].properties.city_name					!= "")  ? multilang.get("City_Name") + " : " + city_name_list[mukeb_item[counter].properties.city_name] + "<br>" : "");
+			text += ((mukeb_item[counter].properties.address					!= "")  ? multilang.get("Address") + " : " + mukeb_item[counter].properties.address + "<br>" : "");
+			text += ((mukeb_item[counter].properties.amud						!= "")  ? multilang.get("Pillar_Number") + " : " + mukeb_item[counter].properties.amud + "<br>" : "");
+			text += ((mukeb_item[counter].properties.Phone_number_1				!= "")  ? multilang.get("Phone_number_1") + " : " + mukeb_item[counter].properties.Phone_number_2 + "<br>" : "");
+			text += ((mukeb_item[counter].properties.Phone_number_2				!= "")  ? multilang.get("Phone_number_2") + " : " + mukeb_item[counter].properties.Phone_number_2 + "<br>" : "");
+			text += ((mukeb_item[counter].properties.Phone_number_3				!= "")  ? multilang.get("service_phone_number") + " : " + mukeb_item[counter].properties.Phone_number_3 + "<br>" : "");
+			text += ((mukeb_item[counter].properties.Telegram_ID				!= "")  ? multilang.get("Telegram_ID") + " : " + mukeb_item[counter].properties.Telegram_ID + "<br>" : "");
+			text += ((mukeb_item[counter].properties.WhatsApp_ID				!= "")  ? multilang.get("WhatsApp_ID") + " : " + mukeb_item[counter].properties.WhatsApp_ID + "<br>" : "");
+			text += ((mukeb_item[counter].properties.Line_ID					!= "")  ? multilang.get("Line_ID") + " : " + mukeb_item[counter].properties.Line_ID + "<br>" : "");
+			text += ((mukeb_item[counter].properties.Imo_ID						!= "")  ? multilang.get("Imo_ID") + " : " + mukeb_item[counter].properties.Imo_ID + "<br>" : "");
+			text +=  "<hr>";
+			text +=  multilang.get("Features") + " : " + "<br>";
+			text += ((mukeb_item[counter].properties.food						== "1") ? multilang.get("Food") + " : " + multilang.get("yes") + "<br>" : "");
+			text += ((mukeb_item[counter].properties.internet					== "1") ? multilang.get("Internet") + " : " + multilang.get("yes") + "<br>" : "");
+			text += ((mukeb_item[counter].properties.blanket					== "1") ? multilang.get("Blanket") + " : " + multilang.get("yes") + "<br>" : "");
+			text += ((mukeb_item[counter].properties.wc							== "1") ? multilang.get("WC") + " : " + multilang.get("yes") + "<br>" : "");
+			text += ((mukeb_item[counter].properties.washing_machine			== "1") ? multilang.get("Washing_Machine") + " : " + multilang.get("yes") + "<br>" : "");
+			text += ((mukeb_item[counter].properties.bathroom					== "1") ? multilang.get("Bathroom") + " : " + multilang.get("yes") + "<br>" : "");
+			text +=  "<hr>";
+			text += ((mukeb_item[counter].properties.Description				!= "")  ? multilang.get("Description") + " : " + mukeb_item[counter].properties.Description + "<br>" : "");
+
+			jQuery.magnificPopup.open({
+				items: {
+					src: '<div class="white-popup">' + text + '</div>', // can be a HTML string, jQuery object, or CSS selector
+					type: 'inline'
+				}
+			});
+		//} catch (e) {
+		//	console.log("NOT JSON");
+		//}
+	}
+//console.log("**************************************************************************************");
+//console.log("**************************************************************************************");
+//console.log("**************************************************************************************");
+//console.log("**************************************************************************************");
+//console.log("**************************************************************************************");
+//console.log("**************************************************************************************");
+//console.log("**************************************************************************************");
+//console.log("**************************************************************************************");
+
+	var categories = {
+		101 : {desc: multilang.get("Holy_places"), icon:"zearati",zIndexOffset: 5},/////////////
+		102 : {desc: multilang.get("Points_of_interest"), icon:"fav",zIndexOffset: 5},
+		103 : {desc: multilang.get("Health_centers"), icon:"hospetal",zIndexOffset: 5},///////////////////////////////
+		//104 : {desc: multilang.get("Health_centers"), icon:"hospetal"},///////////////////////////////
+		106 : {desc: multilang.get("Hotels"), icon:"hotel",zIndexOffset: 5},///////////////////////////////
+		107 : {desc: multilang.get("Pillars"), icon:"mil",zIndexOffset: 5},//////////////////////////////////
+		108 : {desc: multilang.get("Transportation"), icon:"hamlonaghl",zIndexOffset: 5},/////////////////////////////
+		109 : {desc: multilang.get("Lost_Found"), icon:"gomshodeghan",zIndexOffset: 5},
+		110 : {desc: multilang.get("Consular_Services"), icon:"consular",zIndexOffset: 5},
+		111 : {desc: multilang.get("Official_Services"), icon:"edari",zIndexOffset: 5},
+		112 : {desc: multilang.get("Tents"), icon:"mukeb",zIndexOffset: 5},
+	};
+
+	
+		
+	var icon_style_favorites_new = L.Icon.extend({
+		options: {
+			iconSize:     [25, 41], // size of the icon
+			iconAnchor:   [12,41], // point of the icon which will correspond to marker's location
+			popupAnchor:  [0, -41], // point from which the popup should open relative to the iconAnchor
+			shadowSize:   [41, 41],
+			shadowAnchor: [11, 39]
+		}
+	});
+	var icon_style_user_location = L.Icon.extend({
+		options: {
+			iconSize:     [44, 59], // size of the icon
+			iconAnchor:   [22,59], // point of the icon which will correspond to marker's location
+			popupAnchor:  [0, -59] // point from which the popup should open relative to the iconAnchor
+		}
+	});
+	var all_normal_icons = L.Icon.extend({
+		options: {
+			iconSize:     [33, 44], // size of the icon
+			iconAnchor:   [16,44], // point of the icon which will correspond to marker's location
+			popupAnchor:  [0, -44] // point from which the popup should open relative to the iconAnchor
+		}
+	});
+	var	user_location_icon	= new all_normal_icons({iconUrl: 'maps/map-icon/user_location.png',iconRetinaUrl: 'maps/map-icon/user_location@2x.png',});
+	var	user_location_icon_friend	= new all_normal_icons({iconUrl: 'maps/map-icon/user_location_friend.png',iconRetinaUrl: 'maps/map-icon/user_location_friend@2x.png',});
+	var	from_icon			= new all_normal_icons({iconUrl: 'maps/map-icon/a.png',iconRetinaUrl: 'maps/map-icon/a@2x.png',});
+	var	to_icon				= new all_normal_icons({iconUrl: 'maps/map-icon/b.png',iconRetinaUrl: 'maps/map-icon/b@2x.png',});
+	
+	var setupIcons = function() {
+
+		var icons = {};
+		for (var cat in categories) {
+			var icon = categories[cat].icon;
+			//console.log(icon);
+			/**/
+			var url = "maps/map-icon/" + icon;
+	 
+			var icon = L.icon({
+				iconUrl:		url + '.png',
+				iconRetinaUrl:	url + '@2x.png',
+				iconSize:		[33, 44],
+				iconAnchor:		[16,44],
+				popupAnchor:	[0, -44]
+			});
+			
+			icons[cat] = icon;
+		}
+		
+		return icons;
+	};
+	var icons = setupIcons();
+
+
+
+
+	var offline_map = L.tileLayer('maps/mapquest/{z}/{x}/{y}.png', {maxZoom: 15}),
+		online_map  = L.tileLayer(window.localStorage.getItem("map_server_url") + '/{z}/{x}/{y}.png', {maxZoom: 18});
+	
+	if(window.localStorage.getItem('download_localPath')==null)
+	{
+		var start_map  = online_map;
+		var start_zoom = 18;
+		$("#wifi_btn").css("background-color","#039d85");
+	}
+	else
+	{
+		offline_map = L.tileLayer(window.localStorage.getItem('download_localPath') + '/mapquest/{z}/{x}/{y}.png', {maxZoom: 15})
+		var start_map  = offline_map;
+		var start_zoom = 15;
+		$("#wifi_btn").css("background-color","#c1c1c1");
+	}
+	
+	//najaf//lat=32.0192&long=44.3298
+	//karbala//lat=32.6073&long=44.0115
+	var lat_center = getParameterByName('lat');
+	var long_center = getParameterByName('long');
+	var zoom = getParameterByName('zoom');
+	if(lat_center=="")
+		lat_center=32.0192;
+	if(long_center=="")
+		long_center=44.3298;
+	if(zoom=="")
+		zoom=14;
+	var map_center = new L.latLng(lat_center,long_center);
+	var map = L.map('map', {
+		zoom: zoom,
+		maxZoom: start_zoom,//17
+		minZoom:1,
+		center: map_center,
+		layers: start_map,//offline_map,//online_map,//L.tileLayer('maps/mapquest/{z}/{x}/{y}.png'),
+		zoomControl:false
+	});
+
+		
+	// Layer control, setting up 1 layer per category
+	var layers = {},
+		cultureLayer = L.layerGroup(),
+		layerCtrl = L.control.layers();
+	for (var icat in categories) {
+		var layer = L.featureGroup();
+		layers[icat] = layer;
+		cultureLayer.addLayer(layer);
+		
+		//var cat = categories[icat],desc = '<img class="layer-control-img ' + cat.icon + '" src="maps/map-icon/' + cat.icon + '@2x.png"> ' + cat.desc;
+		var cat = categories[icat],desc = cat.desc;
+		layerCtrl.addOverlay(layer, desc);
+	}
+	//cultureLayer.addTo(map);
+
+/**/
+	var restLayers = L.geoJson(restaurant500, {
+		pointToLayer: function(feature, latlng) {
+			var cat							= feature.properties.categorie;
+			var name						= feature.properties.name;
+			var counter						= feature.properties.counter;
+			var capacity_man_remaining		= feature.properties.capacity_man_remaining;
+			var capacity_woman_remaining	= feature.properties.capacity_woman_remaining;
+			var capacity_last_update		= feature.properties.capacity_last_update;
+			if(capacity_last_update!="")
+			{
+				capacity_last_update = new Date(capacity_last_update*1000);
+				//capacity_last_update = "<span class='show_date'>" + capacity_last_update.getFullYear() + "-" + (capacity_last_update.getMonth()+1) + "-" + capacity_last_update.getDate() + " " + capacity_last_update.getHours() + ":" + capacity_last_update.getMinutes() + "</span>";
+				capacity_last_update = jQuery.timeago(capacity_last_update); 
+			}
+			var popup_temp_string			 = "<div onclick='show_mukeb_info(" + counter +");'>";
+			popup_temp_string				+= "<h3>" + multilang.get("Mukeb_Name") + " : " + name + "</h3>";
+			popup_temp_string				+= ((capacity_man_remaining != "") ? multilang.get("Remaining_Man_capacity") + " : " + capacity_man_remaining + "<br>" : "");
+			popup_temp_string				+= ((capacity_woman_remaining != "") ? multilang.get("Remaining_Woman_capacity") + " : " + capacity_woman_remaining + "<br>" : "");
+			popup_temp_string				+= ((capacity_last_update != "") ? "<span class='show_date_dec'>" + multilang.get("Last_update") + ": </span><br>" + capacity_last_update + "" : "");
+			popup_temp_string				+= "<br><span class='clickable'>" + multilang.get("More_Details") + "</span>";
+			popup_temp_string			 	+= "</div>";
+			
+			
+			
+			var icon = icons[cat];
+			if(cat==112)
+			{
+				var props = L.Util.extend({
+								'name': '',
+								'cuisine': '',
+								'website': '',
+								'phone': ''
+							},feature.properties),
+							textPopup = L.Util.template(popup_temp_string, props),
+							style = {
+								radius: 5,
+								opacity: 0.8,
+								fillColor: '#ddd',
+								fillOpacity: 0.8
+							};
+			}
+			else
+			{
+				var props = L.Util.extend({
+								'name': '',
+								'cuisine': '',
+								'website': '',
+								'phone': ''
+							},feature.properties),
+							textPopup = L.Util.template("<h3>{name}</h3>", props),
+							style = {
+								radius: 5,
+								opacity: 0.8,
+								fillColor: '#ddd',
+								fillOpacity: 0.8
+							};
+			}
+			//return L.circleMarker(latlng, style).bindPopup(textPopup);
+			/**/
+			var my_marker = L.marker(latlng, {icon: icon,keyboard: false,riseOnHover: true}).bindPopup(textPopup);
+			layerwww = layers[cat];
+			if (layerwww !== undefined) {
+				//console.log(layerwww);
+				layerwww.addLayer(my_marker);
+			}
+			return my_marker;
+			
+		}
+	});
+	//restLayers.addTo(map);
+//////////////////////////////////////////////////
+//////favorite////////////////////////////////////
+	new_favorite_marker = "";
+	route_to_marker = "";
+	route_from_marker = "";
+	routing_roud = "";
+	add_to_favorites_popup = false;
+	routing_from_popup = false;
+	routing_to_popup = false;
+
+	if(window.localStorage.getItem('favorites_lat') == null)
+	{
+		window.localStorage.setItem('favorites_lat',JSON.stringify([""]));
+		window.localStorage.setItem('favorites_long',JSON.stringify([""]));
+		window.localStorage.setItem('favorites_title',JSON.stringify([""]));
+	}
+	else
+	{
+		temp_array_lat	 = JSON.parse(window.localStorage.getItem('favorites_lat'));
+		temp_array_long	 = JSON.parse(window.localStorage.getItem('favorites_long'));
+		temp_array_title = JSON.parse(window.localStorage.getItem('favorites_title'));
+		$.each(temp_array_lat, function(i, val) {
+			//alert(i + ":" + val);
+			//alert(temp_array_long[i]);
+			if(temp_array_long[i]!="")
+			{
+				cat = 102;
+				var icon = icons[cat];
+				var my_marker = L.marker([temp_array_lat[i],temp_array_long[i]], {icon: icon,keyboard: false,riseOnHover: true}).bindPopup("<h3>" + temp_array_title[i] + "</h3>");
+				layerwww = layers[cat];
+				if (layerwww !== undefined) {
+					//console.log(layerwww);
+					layerwww.addLayer(my_marker);
+				}
+			}
+		});
+	}
+//////favorite////////////////////////////////////
+//////////////////////////////////////////////////
+
+
+		
+		
+	var fuse = new Fuse(restaurant500.features, {
+		keys: ['properties.name']
+	});
+
+	L.control.search({
+		layer: restLayers,
+		propertyName: 'name',
+		textErr: multilang.get("No_location_found"),	//error message
+		textCancel: multilang.get("Cancel"),		    //title in cancel button		
+		textPlaceholder: multilang.get("Search_among_places"),   //placeholder value		 // 'جستجو در میان نقاط...'//		'البحث في المواقع...'
+		markerLocation: true,
+		filterData: function(text, records) {
+			var jsons = fuse.search(text),
+				ret = {}, key;
+			
+			for(var i in jsons) {
+				//jsons[i].properties.name = jsons[i].properties.name + " - 000";
+				key = jsons[i].properties.name;
+				ret[ key ]= records[key];
+			}
+
+			//console.log(jsons,ret);
+			return ret;
+		}
+	})
+	.on('search_locationfound', function(e) {
+		e.layer.openPopup();
+	}).addTo(map);
+
+	layerCtrl.setPosition('topleft');
+	layerCtrl.addTo(map);
+	
+	
+	L.control.scale({'position':'bottomleft'}).addTo(map);
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	var customControl =  L.Control.extend({
+		options: {
+			position: 'topleft'
+		},
+		onAdd: function (map) {
+			var container = L.DomUtil.create('div', 'leaflet-bar leaflet-control leaflet-control-back_btn');
+
+			container.style.backgroundColor = 'white';     
+			container.style.backgroundImage = "url('maps/images/back.png')";
+			container.style.backgroundSize = "30px 30px";
+			container.style.width = '30px';
+			container.style.height = '30px';
+
+			container.onclick = function(){
+				//console.log('buttonClicked');
+				//window.location.href = 'map.html';
+				//window.location.href = "map.html";
+				go_back_from_map();
+			}
+
+			return container;
+		}
+	});
+	map.addControl(new customControl());
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	
+	
+
+	
+	setTimeout(function(){
+		var show_mukeb = getParameterByName('show_mukeb');
+		var show_amud = getParameterByName('show_amud');
+		
+		$('.leaflet-control-layers-list .leaflet-control-layers-overlays .leaflet-control-layers-selector').prop('checked', true);
+		if(show_mukeb=="yes" && show_amud!="yes")
+		{
+			$('.leaflet-control-layers-list .leaflet-control-layers-overlays .leaflet-control-layers-selector').slice(0,2).prop('checked', false);
+			$('.leaflet-control-layers-list .leaflet-control-layers-overlays .leaflet-control-layers-selector').slice(9,10).prop('checked', false);
+		}
+		else if(show_mukeb!="yes" && show_amud!="yes")
+		{
+			$('.leaflet-control-layers-list .leaflet-control-layers-overlays .leaflet-control-layers-selector').slice(0,2).prop('checked', false);
+		}
+		else if(show_mukeb!="yes" && show_amud=="yes")
+		{
+			$('.leaflet-control-layers-list .leaflet-control-layers-overlays .leaflet-control-layers-selector').slice(1,2).prop('checked', false);
+			$('.leaflet-control-layers-list .leaflet-control-layers-overlays .leaflet-control-layers-selector').slice(4,5).prop('checked', false);
+		}
+		else if(show_mukeb=="yes" && show_amud=="yes")
+		{
+			$('.leaflet-control-layers-list .leaflet-control-layers-overlays .leaflet-control-layers-selector').slice(1,2).prop('checked', false);
+			$('.leaflet-control-layers-list .leaflet-control-layers-overlays .leaflet-control-layers-selector').slice(4,5).prop('checked', false);
+			$('.leaflet-control-layers-list .leaflet-control-layers-overlays .leaflet-control-layers-selector').slice(9,10).prop('checked', false);
+		}
+		else
+			$('.leaflet-control-layers-list .leaflet-control-layers-overlays .leaflet-control-layers-selector').slice(2).prop('checked', false);
+			
+		$('.leaflet-control-layers-list .leaflet-control-layers-overlays .leaflet-control-layers-selector').trigger('click');
+		
+		setTimeout(function(){ jQuery('.preloader').css("opacity","0"); }, 10);
+		setTimeout(function(){ jQuery('.preloader').addClass("display_none"); }, 900);
+	}, 1000);
+	
+
+	
+	
+	
+	function route_function(point1th_lat,point1th_long,point2th_lat,point2th_long) {
+		var temp_language = "ar";
+		if(window.localStorage.getItem('language') == "lang_fa")
+			temp_language = "fa";
+		else if(window.localStorage.getItem('language') == "lang_en")
+			temp_language = "en";
+		else
+			temp_language = "ar";
+
+		/*** start routing ***/
+		//new_favorite_marker = L.marker(map.getCenter(), {icon: from_icon} ).addTo(map);
+		waypoints = [
+			L.latLng(point1th_lat,point1th_long),
+			L.latLng(point2th_lat,point2th_long)
+		];
+		routing_roud = L.Routing.control({
+							plan: L.Routing.plan(waypoints, {
+								createMarker: function(i, wp) {
+									if(i==0)
+										return L.marker(wp.latLng, {draggable: true,icon: from_icon} );
+									else //if(i==1)
+										return L.marker(wp.latLng, {draggable: true,icon: to_icon} );
+								},
+								geocoder: L.Control.Geocoder.nominatim(),
+								routeWhileDragging: true
+							}),
+							routeWhileDragging: true,
+							routeDragTimeout: 250,
+							reverseWaypoints: false,
+							showAlternatives: true,
+							altLineOptions: {
+								styles: [
+									{color: 'black', opacity: 0.15, weight: 9},
+									{color: 'white', opacity: 0.8, weight: 6},
+									{color: 'blue', opacity: 0.5, weight: 2}
+								]
+							},
+							language: temp_language,
+							position:'bottomleft'
+						}).addTo(map);
+		/*
+		routing_roud = L.Routing.control({
+			waypoints: [
+				L.latLng(point1th_lat,point1th_long),
+				L.latLng(point2th_lat,point2th_long)
+			],
+			routeWhileDragging: true,
+			reverseWaypoints: false,
+			showAlternatives: true,
+			altLineOptions: {
+				styles: [
+					{color: 'black', opacity: 0.15, weight: 9},
+					{color: 'white', opacity: 0.8, weight: 6},
+					{color: 'blue', opacity: 0.5, weight: 2}
+				]
+			},
+			geocoder: L.Control.Geocoder.nominatim(),
+			language: "fa",
+			position:'bottomleft'
+		}).addTo(map);
+		*/
+		
+		
+		
+		
+	}
+	
+	(function($) {
+		$.fn.clickToggle = function(func1, func2) {
+			var funcs = [func1, func2];
+			this.data('toggleclicked', 0);
+			this.click(function() {
+				var data = $(this).data();
+				var tc = data.toggleclicked;
+				$.proxy(funcs[tc], this)();
+				data.toggleclicked = (tc + 1) % 2;
+			});
+			return this;
+		};
+	}(jQuery));
+	
+	$(document).ready(function(){
+		need_translate();
+		$("#routing_btn").click(function(){
+			//route_function(31.99564047,44.31262563,32.6171,44.0362);
+			routing_open();
+		});
+		
+		$("#favorites_btn").click(function(){
+			add_to_favorites_open();
+		});
+		$("#location_btn").click(function(){
+			//$("#location_btn").addClass("active");
+			if ($("#location_btn").hasClass("active")) {
+				map.panTo(new L.LatLng(my_location_marker.getLatLng().lat, my_location_marker.getLatLng().lng));
+			}
+		});
+
+		/*
+		function onConfirm_download_map(buttonIndex) {
+			if(buttonIndex==1)
+			{
+				window.location.href = "download.html";
+			}
+			return true;
+		}
+		function show_map_download_Confirm() {
+			alert("show_map_download_Confirm()");
+			navigator.notification.confirm(
+				multilang.get("Download_offline_map"),		// message
+				onConfirm_download_map,     				// callback to invoke with index of button pressed
+				multilang.get("notice"),					// title
+				'Download,Cancel'							// buttonLabels
+			);
+		}
+		*/
+		function change_map_online_function() {
+			map.removeLayer(offline_map);
+			map.addLayer(online_map);
+			map.options.maxZoom = 18;
+			
+			$("#wifi_btn").css("background-color","#039d85");
+			//$("#routing_btn").css("display","block");
+		}
+		function change_map_offline_function() {
+			if(window.localStorage.getItem('download_localPath')==null)
+			{
+				window.location.href = "download.html";
+				//alert("change_map_offline_function()");
+				//show_map_download_Confirm();
+				//$("#wifi_btn").trigger("click");
+				return true;
+			}
+			map.removeLayer(online_map);
+			map.addLayer(offline_map);
+			map.options.maxZoom = 15;
+			
+			$("#wifi_btn").css("background-color","#c1c1c1");
+			$("#routing_btn").css("display","none");
+		}
+		//$("#wifi_btn").clickToggle(change_map_online_function,change_map_offline_function);
+		if(window.localStorage.getItem('download_localPath')==null)
+		{
+			$("#wifi_btn").clickToggle(change_map_offline_function,change_map_online_function);
+		}
+		else
+		{
+			$("#wifi_btn").clickToggle(change_map_online_function,change_map_offline_function);
+		}
+	});
+	
+	function routing_open() {
+		if(routing_from_popup==false)
+		{
+			//map.removeLayer(routing_roud);
+			if(routing_roud)
+				routing_roud.spliceWaypoints(0, 2);
+			routing_roud = "";
+			
+			route_from_marker = L.marker(map.getCenter(), {icon: from_icon} ).addTo(map);
+
+			map.on('move', function () {
+				if(routing_from_popup && !routing_to_popup)
+					route_from_marker.setLatLng(map.getCenter());
+			});
+		 
+			$("#routing_btn").addClass("disabled");
+			$(".cd-popup.route_from").addClass("is-visible");
+			routing_from_popup = true;
+			routing_to_popup = false;
+		}
+		else 
+		{
+			if(routing_roud)
+				routing_roud.spliceWaypoints(0, 2);
+			routing_roud = "";
+			
+			$("#routing_btn").removeClass("disabled");
+			$(".cd-popup.route_from").removeClass("is-visible");
+			$(".cd-popup.route_to").removeClass("is-visible");
+			routing_from_popup = false;
+			routing_to_popup = false;
+			map.removeLayer(route_from_marker);
+			map.removeLayer(route_to_marker);
+		}
+	}
+	function routing_to_open() {
+		route_to_marker = L.marker(map.getCenter(),{icon: to_icon} ).addTo(map);
+						
+		map.on('move', function () {
+			if(routing_to_popup)
+				route_to_marker.setLatLng(map.getCenter());
+		});
+		
+		$(".cd-popup.route_from").removeClass("is-visible");
+		$(".cd-popup.route_to").addClass("is-visible");
+		routing_from_popup = true;
+		routing_to_popup = true;
+	}
+	function routinging_start() {
+		route_function(route_from_marker.getLatLng().lat,route_from_marker.getLatLng().lng,route_to_marker.getLatLng().lat,route_to_marker.getLatLng().lng);
+		
+		$("#routing_btn").removeClass("disabled");
+		$(".cd-popup.route_from").removeClass("is-visible");
+		$(".cd-popup.route_to").removeClass("is-visible");
+		routing_from_popup = true;
+		routing_to_popup = true;
+		map.removeLayer(route_from_marker);
+		map.removeLayer(route_to_marker);
+	}
+	function add_to_favorites_open() {
+		if(add_to_favorites_popup==false)
+		{
+			new_favorite_marker = L.marker(map.getCenter() ).addTo(map);
+							
+			map.on('move', function () {
+				new_favorite_marker.setLatLng(map.getCenter());
+				//console.log(map.getCenter());
+			});
+		
+			$("#favorites_btn").addClass("disabled");
+			$(".cd-popup.favorites").addClass("is-visible");
+			add_to_favorites_popup = true;
+			//new_favorite_marker_icon	= new icon_style_favorites_new({iconUrl: 'maps/map-icon/marker-icon.png',iconRetinaUrl: 'maps/map-icon/marker-icon@2x.png',shadowUrl: 'maps/map-icon/marker-shadow.png',});
+			//new_favorite_marker = L.marker(map.getCenter(), {icon: new_favorite_marker_icon,setZIndexOffset: 1000,draggable:true}).addTo(map).bindPopup("ضع هذا المؤشر على الموقع المراد تحديده.").openPopup();
+		}
+		else
+		{
+			$("#favorites_btn").removeClass("disabled");
+			$(".cd-popup.favorites").removeClass("is-visible");
+			add_to_favorites_popup = false;
+			$("#favorite_title").val("");
+			map.removeLayer(new_favorite_marker);
+		}
+	}
+	
+	function add_to_favorites() {
+		temp_array_lat	 = JSON.parse(window.localStorage.getItem('favorites_lat'));
+		temp_array_long	 = JSON.parse(window.localStorage.getItem('favorites_long'));
+		temp_array_title = JSON.parse(window.localStorage.getItem('favorites_title'));
+		temp_new_title	 = $("#favorite_title");
+		
+		temp_array_lat.push(new_favorite_marker.getLatLng().lat);
+		temp_array_long.push(new_favorite_marker.getLatLng().lng);
+		temp_array_title.push(temp_new_title.val());
+		
+		window.localStorage.setItem('favorites_lat',JSON.stringify(temp_array_lat));
+		window.localStorage.setItem('favorites_long',JSON.stringify(temp_array_long));
+		window.localStorage.setItem('favorites_title',JSON.stringify(temp_array_title));
+		
+		cat = 102;
+		var icon = icons[cat];
+		var my_marker = L.marker([new_favorite_marker.getLatLng().lat,new_favorite_marker.getLatLng().lng], {icon: icon,keyboard: false,riseOnHover: true}).bindPopup("<h3>" + temp_new_title.val() + "</h3>");
+		var my_marker2 = L.marker([new_favorite_marker.getLatLng().lat,new_favorite_marker.getLatLng().lng], {icon: icon,keyboard: false,riseOnHover: true}).bindPopup("<h3>" + temp_new_title.val() + "</h3>");
+		my_marker2.addTo(map);
+		layerwww = layers[cat];
+		if (layerwww !== undefined) {
+			//console.log(layerwww);
+			layerwww.addLayer(my_marker);
+		}
+		map.removeLayer(new_favorite_marker);
+
+		
+		temp_new_title.val("");
+		add_to_favorites_popup = false;
+		$(".cd-popup.favorites").removeClass("is-visible");
+		$("#add_to_favorites").removeClass("disabled");
+	}
+	//console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    fihish()');
+</script>
+<div id="test-popup" class="white-popup mfp-hide">
+  Popup content
+</div>
+<!-- ////////////////////////////////////////////////////////////////////// -->
+<!-- ////////////////////////////////////////////////////////////////////// -->
+<!-- popup plugin init////////////////////////////////////////////////////////////////////// -->
+<style>
+.white-popup {
+	position: relative;
+	background: #FFF;
+	padding: 20px;
+	width: 80%;
+	max-width: 500px;
+	margin: 20px auto;
+}
+.white-popup {
+    position: absolute;
+    background: #FFF;
+    padding: 20px;
+    width: 80%;
+    max-width: 500px;
+    margin: 20px auto;
+    overflow-x: auto;
+    /*height: 80%;*/
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+}
+.arabic_text .white-popup,.persian_text .white-popup{direction:rtl !important;text-align: right !important;}
+.arabic_text .mfp-close,.persian_text .mfp-close{right:auto;left:0;}
+.english_text .white-popup{direction:ltr;text-align: left;}
+.mfp-content {
+    height: 100%;
+    top: 0px;
+}
+button.mfp-close {
+    background-color: rgba(256,256,256,0.65);
+    border-radius: 50%;
+    color: red !important;
+    opacity: 1;
+}
+</style>
+<a href="#test-popup" class="open-popup-link">Show inline popup</a>
+
+<script>
+$('.open-popup-link').magnificPopup({
+	type:'inline',
+	midClick: true // allow opening popup on middle mouse click. Always set it to true if you don't provide alternative source.
+});
+</script>
+<!-- popup plugin init///////////////////////////////////////////////////// -->
+<!-- ////////////////////////////////////////////////////////////////////// -->
+<!-- ////////////////////////////////////////////////////////////////////// -->
+
+<!-- ////////////////////////////////////////////////////////////////////// -->
+<!-- ////////////////////////////////////////////////////////////////////// -->
+<!-- slider plugin init//////////////////////////////////////////////////// -->
+<style>
+#slides {
+	display: none
+}
+
+#slides .slidesjs-navigation {
+	margin-top:5px;
+}
+
+a.slidesjs-next,
+a.slidesjs-previous,
+a.slidesjs-play,
+a.slidesjs-stop {
+	background-image: url(images/slider/btns-next-prev.png);
+	background-repeat: no-repeat;
+	display:block;
+	width:12px;
+	height:18px;
+	overflow: hidden;
+	text-indent: -9999px;
+	float: left;
+	margin-right:5px;
+}
+
+a.slidesjs-next {
+	margin-right:10px;
+	background-position: -12px 0;
+}
+
+a:hover.slidesjs-next {
+	background-position: -12px -18px;
+}
+
+a.slidesjs-previous {
+	background-position: 0 0;
+}
+
+a:hover.slidesjs-previous {
+	background-position: 0 -18px;
+}
+
+a.slidesjs-play {
+	width:15px;
+	background-position: -25px 0;
+}
+
+a:hover.slidesjs-play {
+	background-position: -25px -18px;
+}
+
+a.slidesjs-stop {
+	width:18px;
+	background-position: -41px 0;
+}
+
+a:hover.slidesjs-stop {
+	background-position: -41px -18px;
+}
+
+.slidesjs-pagination {
+	margin: 7px 0 0;
+	float: right;
+	list-style: none;
+}
+
+.slidesjs-pagination li {
+	float: left;
+	margin: 0 1px;
+}
+
+.slidesjs-pagination li a {
+	display: block;
+	width: 13px;
+	height: 0;
+	padding-top: 13px;
+	background-image: url(images/slider/pagination.png);
+	background-position: 0 0;
+	float: left;
+	overflow: hidden;
+}
+
+.slidesjs-pagination li a.active,
+.slidesjs-pagination li a:hover.active {
+	background-position: 0 -13px;
+}
+
+.slidesjs-pagination li a:hover {
+	background-position: 0 -26px
+}
+
+#slides a:link,
+#slides a:visited {
+	color: #333
+}
+
+#slides a:hover,
+#slides a:active {
+	color: #9e2020
+}
+</style>
+<!-- slider plugin init//////////////////////////////////////////////////// -->
+<!-- ////////////////////////////////////////////////////////////////////// -->
+<!-- ////////////////////////////////////////////////////////////////////// -->
+<style>
+.leaflet-control-layers-selector {
+	margin-top: 2px;
+	position: relative;
+	top: 1px;
+	-webkit-appearance: checkbox;
+	appearance: checkbox;
+}
+
+.arabic_text div.leaflet-control-layers.leaflet-control form.leaflet-control-layers-list div.leaflet-control-layers-overlays label:nth-child(9) div,
+.english_text div.leaflet-control-layers.leaflet-control form.leaflet-control-layers-list div.leaflet-control-layers-overlays label:nth-child(9) div {
+    width: 0;
+    height: 0;
+    overflow: hidden;
+}
+
+textarea, input, textarea, button, select, a, img { outline: none; }
+.persian_text div,.persian_text button,.persian_text .ripple,.persian_text .button--material,.persian_text .button--large--cta,.persian_text .button,.persian_text input,.persian_text select{
+	font-family:"iranyekan",Tahoma !important;
+	font-size:14px;
+}
+.arabic_text div,.arabic_text button,.arabic_text .ripple,.arabic_text .button--material,.arabic_text .button--large--cta,.arabic_text .button,.arabic_text input,.arabic_text select{
+	font-family:"Droid Arabic Kufi",Tahoma !important;
+	font-size:14px;
+}
+.english_text div,.english_text button,.english_text .ripple,.english_text .button--material,.english_text .button--large--cta,.english_text .button,.english_text input,.english_text select{
+	font-family:Tahoma !important;
+	font-size:14px;
+}
+#routing_btn{display:none;}
+</style>
+</body>
+</html>
