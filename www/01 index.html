@@ -27,8 +27,6 @@
 	<link rel="stylesheet" href="css/home.css">
 	
 	<style>
-		/*
-		*/
 		.display_none_on_android_v4{display:none !important;}
 	</style>
 	<script>
@@ -37,14 +35,11 @@
 		news_id = "";
 		current_page = "";
 		version = "1.00";
-		all_css_placeholder = "";
 		app = {};
 		Base64={_keyStr:"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",encode:function(e){var t="";var n,r,i,s,o,u,a;var f=0;e=Base64._utf8_encode(e);while(f<e.length){n=e.charCodeAt(f++);r=e.charCodeAt(f++);i=e.charCodeAt(f++);s=n>>2;o=(n&3)<<4|r>>4;u=(r&15)<<2|i>>6;a=i&63;if(isNaN(r)){u=a=64}else if(isNaN(i)){a=64}t=t+this._keyStr.charAt(s)+this._keyStr.charAt(o)+this._keyStr.charAt(u)+this._keyStr.charAt(a)}return t},decode:function(e){var t="";var n,r,i;var s,o,u,a;var f=0;e=e.replace(/[^A-Za-z0-9\+\/\=]/g,"");while(f<e.length){s=this._keyStr.indexOf(e.charAt(f++));o=this._keyStr.indexOf(e.charAt(f++));u=this._keyStr.indexOf(e.charAt(f++));a=this._keyStr.indexOf(e.charAt(f++));n=s<<2|o>>4;r=(o&15)<<4|u>>2;i=(u&3)<<6|a;t=t+String.fromCharCode(n);if(u!=64){t=t+String.fromCharCode(r)}if(a!=64){t=t+String.fromCharCode(i)}}t=Base64._utf8_decode(t);return t},_utf8_encode:function(e){e=e.replace(/\r\n/g,"\n");var t="";for(var n=0;n<e.length;n++){var r=e.charCodeAt(n);if(r<128){t+=String.fromCharCode(r)}else if(r>127&&r<2048){t+=String.fromCharCode(r>>6|192);t+=String.fromCharCode(r&63|128)}else{t+=String.fromCharCode(r>>12|224);t+=String.fromCharCode(r>>6&63|128);t+=String.fromCharCode(r&63|128)}}return t},_utf8_decode:function(e){var t="";var n=0;var r=c1=c2=0;while(n<e.length){r=e.charCodeAt(n);if(r<128){t+=String.fromCharCode(r);n++}else if(r>191&&r<224){c2=e.charCodeAt(n+1);t+=String.fromCharCode((r&31)<<6|c2&63);n+=2}else{c2=e.charCodeAt(n+1);c3=e.charCodeAt(n+2);t+=String.fromCharCode((r&15)<<12|(c2&63)<<6|c3&63);n+=3}}return t}}
 		FileTransfer_OBJ = "";
 		found_list = {};
-		$(document).ready(function(){
-			all_css_placeholder = $("#all_css_placeholder");
-		});
+		
 		setTimeout(function(){
 			if(!window.cordova)
 			{
@@ -54,7 +49,7 @@
 					if(window.localStorage.getItem("udid")==null)
 						window.localStorage.setItem("udid","test");
 				}, 1500);
-				//document.querySelector('#myNavigator').resetToPage('zaer_service_I_Lost_Something.html', {animation: "none"});
+				//document.querySelector('#myNavigator').pushPage('zaer_service_I_Lost_Something.html', {animation: "none"});
 			}
 			else
 				FileTransfer_OBJ = new FileTransfer();
@@ -244,13 +239,13 @@
 			//alert(JSON.stringify(data));
 		}
 		function goto_page(page_name) {
-			document.querySelector('#myNavigator').resetToPage(page_name, {animation: "slid",animationOptions:{delay: 0.4} });
+			document.querySelector('#myNavigator').pushPage(page_name, {animation: "slid",animationOptions:{delay: 0.4} });
 		}
 		function goto_page_zaer_service() {
-			document.querySelector('#myNavigator').resetToPage("zaer_services.html", {animation: "slid",animationOptions:{delay: 0.4} });
+			document.querySelector('#myNavigator').pushPage("zaer_services.html", {animation: "slid",animationOptions:{delay: 0.4} });
 		}
 		function goto_page_select_user_type() {
-			document.querySelector('#myNavigator').resetToPage("select_user_type.html", {animation: "slid",animationOptions:{delay: 0.4} });
+			document.querySelector('#myNavigator').pushPage("select_user_type.html", {animation: "slid",animationOptions:{delay: 0.4} });
 		}
 		function uniqueDeviceIDsuccess_index(udid){
 			window.localStorage.setItem('udid',udid);
@@ -1040,7 +1035,7 @@ alert("An error has occurred: Code = " + error.code);
 								//fromTemplate(multilang.get('you_will_recive_sms'));
 								fromTemplate(arr);
 								//window.localStorage.setItem('Pre_registration_step','1');
-								document.querySelector('#myNavigator').resetToPage('confirm_mukeb_manager.html', {animation: "reversedSlide",animationOptions:{delay: 0.4} });
+								document.querySelector('#myNavigator').pushPage('confirm_mukeb_manager.html', {animation: "reversedSlide",animationOptions:{delay: 0.4} });
 							}
 						},
 						error: function(jqXHR, exception) {
@@ -1093,7 +1088,7 @@ alert("An error has occurred: Code = " + error.code);
 						{
 							hideDialog('dialog_progress_bar');
 							fromTemplate(multilang.get('Pre_registration_finished'));
-							//document.querySelector('#myNavigator').resetToPage('confirm_mukeb_manager.html', {animation: "slid",animationOptions:{delay: 0.4} });
+							//document.querySelector('#myNavigator').pushPage('confirm_mukeb_manager.html', {animation: "slid",animationOptions:{delay: 0.4} });
 						},
 						error: function(jqXHR, exception) {
 							$('#modal-text').html('<ons-icon icon="fa-wifi" size="28px"></ons-icon> <span>' + multilang.get('you_must_connect_to_the_internet') + '</span>');
@@ -1149,7 +1144,7 @@ alert("An error has occurred: Code = " + error.code);
 									}
 									else if(json.answer=="we_will_send_sms")
 									{
-										document.querySelector('#myNavigator').resetToPage('forgot_pasword_mukeb_manager_login.html', {animation: "reversedSlide",animationOptions:{delay: 0.4} });
+										document.querySelector('#myNavigator').pushPage('forgot_pasword_mukeb_manager_login.html', {animation: "reversedSlide",animationOptions:{delay: 0.4} });
 									}
 									else
 									{
@@ -1211,7 +1206,7 @@ alert("An error has occurred: Code = " + error.code);
 								}
 								else if(json.answer=="we_will_send_sms")
 								{
-									//document.querySelector('#myNavigator').resetToPage('forgot_pasword_mukeb_manager_login.html', {animation: "slid",animationOptions:{delay: 0.4} });
+									//document.querySelector('#myNavigator').pushPage('forgot_pasword_mukeb_manager_login.html', {animation: "slid",animationOptions:{delay: 0.4} });
 								}
 								else
 								{
@@ -1297,9 +1292,9 @@ alert("An error has occurred: Code = " + error.code);
 									window.localStorage.setItem('capacity_man',json.mukeb_data.capacity_man);
 									
 									if(window.localStorage.getItem('capacity_man')=="null" && window.localStorage.getItem('capacity_woman')=="null")
-										document.querySelector('#myNavigator').resetToPage('edit_mukeb_data.html', {animation: "slid",animationOptions:{delay: 0.4} });
+										document.querySelector('#myNavigator').pushPage('edit_mukeb_data.html', {animation: "slid",animationOptions:{delay: 0.4} });
 									else
-										document.querySelector('#myNavigator').resetToPage('mukeb_manager_menu.html', {animation: "slid",animationOptions:{delay: 0.4} });
+										document.querySelector('#myNavigator').pushPage('mukeb_manager_menu.html', {animation: "slid",animationOptions:{delay: 0.4} });
 								}
 								else
 								{
@@ -1405,9 +1400,9 @@ alert("An error has occurred: Code = " + error.code);
 										window.localStorage.setItem('capacity_man',json.mukeb_data.capacity_man);
 										
 										if(window.localStorage.getItem('capacity_man')=="null" && window.localStorage.getItem('capacity_woman')=="null")
-											document.querySelector('#myNavigator').resetToPage('edit_mukeb_data.html', {animation: "slid",animationOptions:{delay: 0.4} });
+											document.querySelector('#myNavigator').pushPage('edit_mukeb_data.html', {animation: "slid",animationOptions:{delay: 0.4} });
 										else
-											document.querySelector('#myNavigator').resetToPage('mukeb_manager_menu.html', {animation: "slid",animationOptions:{delay: 0.4} });
+											document.querySelector('#myNavigator').pushPage('mukeb_manager_menu.html', {animation: "slid",animationOptions:{delay: 0.4} });
 									}
 									else
 									{
@@ -1532,9 +1527,9 @@ alert("An error has occurred: Code = " + error.code);
 										window.localStorage.setItem('mukeb_data',JSON.stringify(json.mukeb_data));
 										
 										if(window.localStorage.getItem('capacity_man')=="null" && window.localStorage.getItem('capacity_woman')=="null")
-											document.querySelector('#myNavigator').resetToPage('edit_mukeb_data.html', {animation: "slid",animationOptions:{delay: 0.4} });
+											document.querySelector('#myNavigator').pushPage('edit_mukeb_data.html', {animation: "slid",animationOptions:{delay: 0.4} });
 										else
-											document.querySelector('#myNavigator').resetToPage('mukeb_manager_menu.html', {animation: "slid",animationOptions:{delay: 0.4} });
+											document.querySelector('#myNavigator').pushPage('mukeb_manager_menu.html', {animation: "slid",animationOptions:{delay: 0.4} });
 									}
 									else
 									{
@@ -1637,9 +1632,9 @@ alert("An error has occurred: Code = " + error.code);
 									if(act_type=="change_page")
 									{
 										if(window.localStorage.getItem('capacity_man')=="null" && window.localStorage.getItem('capacity_woman')=="null")
-											document.querySelector('#myNavigator').resetToPage('edit_mukeb_data.html', {animation: "slid",animationOptions:{delay: 0.4} });
+											document.querySelector('#myNavigator').pushPage('edit_mukeb_data.html', {animation: "slid",animationOptions:{delay: 0.4} });
 										else
-											document.querySelector('#myNavigator').resetToPage('mukeb_manager_menu.html', {animation: "slid",animationOptions:{delay: 0.4} });
+											document.querySelector('#myNavigator').pushPage('mukeb_manager_menu.html', {animation: "slid",animationOptions:{delay: 0.4} });
 									}
 								}
 								else
@@ -1783,7 +1778,7 @@ alert("An error has occurred: Code = " + error.code);
 								window.localStorage.setItem('last_valid_version',json.last_valid_version);
 								window.localStorage.setItem('update_link',json.update_link);
 								if(version < json.last_valid_version)
-									document.querySelector('#myNavigator').resetToPage('update_link.html', {animation: "slid",animationOptions:{delay: 0.4} });
+									document.querySelector('#myNavigator').pushPage('update_link.html', {animation: "slid",animationOptions:{delay: 0.4} });
 
 								window.localStorage.setItem('activation_text_ar',json.activation_text_ar);
 								window.localStorage.setItem('activation_text_en',json.activation_text_en);
@@ -1973,13 +1968,13 @@ alert("An error has occurred: Code = " + error.code);
 			window.localStorage.removeItem('token');
 			window.localStorage.removeItem('udid');
 
-			document.querySelector('#myNavigator').resetToPage('home.html', {animation: "reversedSlide",animationOptions:{delay: 0.4} });
+			document.querySelector('#myNavigator').pushPage('home.html', {animation: "reversedSlide",animationOptions:{delay: 0.4} });
 		}
 		function LogOut_and_notif(){
 			ons.notification.alert(multilang.get('Please_Login_Again'));
 			window.sessionStorage.setItem('he_is_logined',"false");
 			window.localStorage.removeItem('token');
-			document.querySelector('#myNavigator').resetToPage('select_user_type.html', {animation: "reversedSlide",animationOptions:{delay: 0.4} });
+			document.querySelector('#myNavigator').pushPage('select_user_type.html', {animation: "reversedSlide",animationOptions:{delay: 0.4} });
 		}
 		function editSelect_city_name(event){
 			if (event.target.value != '' && event.target.value != null && event.target.value != multilang.get("City_Name")) {
@@ -2213,7 +2208,7 @@ alert("An error has occurred: Code = " + error.code);
 									//var temp_index = myNavigator.pages.length-1;
 									//myNavigator.removePage(temp_index);
 
-									document.querySelector('#myNavigator').resetToPage('mukeb_manager_menu.html', {animation: "reversedSlide",animationOptions:{delay: 0.4} });
+									document.querySelector('#myNavigator').pushPage('mukeb_manager_menu.html', {animation: "reversedSlide",animationOptions:{delay: 0.4} });
 								}
 								else
 								{
@@ -2417,17 +2412,17 @@ alert("An error has occurred: Code = " + error.code);
 			if(window.sessionStorage.getItem("goto_missing_objects_from")=="zaer")
 			{
 				window.sessionStorage.removeItem("goto_missing_objects_from");
-				document.querySelector('#myNavigator').resetToPage('zaer_services.html', {animation: "reversedSlide",animationOptions:{delay: 0.4} });
+				document.querySelector('#myNavigator').pushPage('zaer_services.html', {animation: "reversedSlide",animationOptions:{delay: 0.4} });
 			}
 			else if(window.sessionStorage.getItem("goto_missing_objects_from")=="mukeb")
 			{
 				window.sessionStorage.removeItem("goto_missing_objects_from");
-				document.querySelector('#myNavigator').resetToPage('mukeb_manager_menu.html', {animation: "reversedSlide",animationOptions:{delay: 0.4} });
+				document.querySelector('#myNavigator').pushPage('mukeb_manager_menu.html', {animation: "reversedSlide",animationOptions:{delay: 0.4} });
 			}
 			else
 			{
 				window.sessionStorage.removeItem("goto_missing_objects_from");
-				document.querySelector('#myNavigator').resetToPage('zaer_services.html', {animation: "reversedSlide",animationOptions:{delay: 0.4} });
+				document.querySelector('#myNavigator').pushPage('zaer_services.html', {animation: "reversedSlide",animationOptions:{delay: 0.4} });
 			}
 		}
 		function show_category_list(){
@@ -2508,7 +2503,7 @@ alert("An error has occurred: Code = " + error.code);
 		function goto_one_news_page(id){
 			console.log("goto_one_news_page()");
 			news_id = id;
-			document.querySelector('#myNavigator').resetToPage('news_page.html', {animation: "slid",animationOptions:{delay: 0.4} });
+			document.querySelector('#myNavigator').pushPage('news_page.html', {animation: "slid",animationOptions:{delay: 0.4} });
 		}
 		function check_net_for_map_and_recommend_download(){
 				if(window.localStorage.getItem('download_localPath')!=null)
@@ -2594,7 +2589,7 @@ alert("An error has occurred: Code = " + error.code);
 				{
 					setTimeout(function(){
 						set_body_language();
-						document.querySelector('#myNavigator').resetToPage('select_user_type.html', {animation: "none" });
+						document.querySelector('#myNavigator').pushPage('select_user_type.html', {animation: "none" });
 					}, 500);
 					setTimeout(function(){
 						navigator.splashscreen.hide();
@@ -2629,7 +2624,7 @@ alert("An error has occurred: Code = " + error.code);
 					if(version < window.localStorage.getItem('last_valid_version'))
 					{
 						get_all_data();
-						document.querySelector('#myNavigator').resetToPage('update_link.html', {animation: "lift",animationOptions:{delay: 0.4} });
+						document.querySelector('#myNavigator').pushPage('update_link.html', {animation: "lift",animationOptions:{delay: 0.4} });
 					}
 				}
 			}, 900);
@@ -2695,7 +2690,7 @@ alert("An error has occurred: Code = " + error.code);
 			window.fn.load = function(page, data) {
 				var content = document.getElementById('myNavigator');
 				var menu = document.getElementById('menu');
-				content.resetToPage(page, data)
+				content.pushPage(page, data)
 					.then(menu.close.bind(menu));
 			};
 
@@ -2722,7 +2717,7 @@ alert("An error has occurred: Code = " + error.code);
 						set_body_language();
 						window.localStorage.setItem('language',"lang_ar");
 						window.localStorage.setItem('text_direction',text_direction);
-						document.querySelector('#myNavigator').resetToPage('select_user_type.html', {animation: "slid",animationOptions:{delay: 0.4} });
+						document.querySelector('#myNavigator').pushPage('select_user_type.html', {animation: "slid",animationOptions:{delay: 0.4} });
 					};
 					page.querySelector('#goto_page_language_en').onclick = function() {
 						lang = lang_en;
@@ -2730,7 +2725,7 @@ alert("An error has occurred: Code = " + error.code);
 						set_body_language();
 						window.localStorage.setItem('language',"lang_en");
 						window.localStorage.setItem('text_direction',text_direction);
-						document.querySelector('#myNavigator').resetToPage('select_user_type.html', {animation: "slid",animationOptions:{delay: 0.4} });
+						document.querySelector('#myNavigator').pushPage('select_user_type.html', {animation: "slid",animationOptions:{delay: 0.4} });
 					};
 					page.querySelector('#goto_page_language_fa').onclick = function() {
 						lang = lang_fa;
@@ -2738,7 +2733,7 @@ alert("An error has occurred: Code = " + error.code);
 						set_body_language();
 						window.localStorage.setItem('language',"lang_fa");
 						window.localStorage.setItem('text_direction',text_direction);
-						document.querySelector('#myNavigator').resetToPage('select_user_type.html', {animation: "slid",animationOptions:{delay: 0.4} });
+						document.querySelector('#myNavigator').pushPage('select_user_type.html', {animation: "slid",animationOptions:{delay: 0.4} });
 					};
 			}
 			else if (page.id === 'select_user_type')
@@ -2748,8 +2743,7 @@ alert("An error has occurred: Code = " + error.code);
 					auto_login();
 					
 					page.querySelector('#goto_page_user_type_zaer').onclick = function() {
-						//document.querySelector('#myNavigator').resetToPage('zaer_services.html', {animation: "slid",animationOptions:{delay: 0.4} });
-						document.querySelector('#myNavigator').resetToPage('zaer_services.html', {animation: "slid",animationOptions:{delay: 0.4} });
+						document.querySelector('#myNavigator').pushPage('zaer_services.html', {animation: "slid",animationOptions:{delay: 0.4} });
 					};
 					page.querySelector('#goto_page_user_type_mukeb').onclick = function() {
 						networkState = navigator.connection.type;
@@ -2766,12 +2760,12 @@ alert("An error has occurred: Code = " + error.code);
 							if(window.localStorage.getItem('token') != null)
 							{
 								if(window.localStorage.getItem('capacity_man')=="null" && window.localStorage.getItem('capacity_woman')=="null")
-									document.querySelector('#myNavigator').resetToPage('edit_mukeb_data.html', {animation: "slid",animationOptions:{delay: 0.4} });
+									document.querySelector('#myNavigator').pushPage('edit_mukeb_data.html', {animation: "slid",animationOptions:{delay: 0.4} });
 								else
-									document.querySelector('#myNavigator').resetToPage('mukeb_manager_menu.html', {animation: "slid",animationOptions:{delay: 0.4} });
+									document.querySelector('#myNavigator').pushPage('mukeb_manager_menu.html', {animation: "slid",animationOptions:{delay: 0.4} });
 							}
 							else
-								document.querySelector('#myNavigator').resetToPage('register_mukeb.html', {animation: "slid",animationOptions:{delay: 0.4} });
+								document.querySelector('#myNavigator').pushPage('register_mukeb.html', {animation: "slid",animationOptions:{delay: 0.4} });
 						}
 					};
 			}
@@ -2825,26 +2819,27 @@ alert("An error has occurred: Code = " + error.code);
 					var temp_div		= $("#main_div_zaer_services");
 					var tempH			= $("#menu_zaer_services").height();
 					//temp_div.css("margin-top",(winH-tempH-50)/2);
-					all_css_placeholder.append("<style>#main_div_zaer_services{margin-top:" + (winH-tempH-100)/2 + "px !important}.select_service_type_btn{height: " + (tempH/4) + "px;}</style>");
+					temp_div_css	= $("#main_div_zaer_services_css_placeholder");
+					temp_div_css.html("<style>#main_div_zaer_services{margin-top:" + (winH-tempH-100)/2 + "px !important}.select_service_type_btn{height: " + (tempH/4) + "px;}</style>");
 					
 					setTimeout(function(){
 						tempH		= $("#menu_zaer_services").height();
 						//temp_div.css("margin-top",(winH-tempH-50)/2);
-						all_css_placeholder.append("<style>#main_div_zaer_services{margin-top:" + (winH-tempH-100)/2 + "px !important}.select_service_type_btn{height: " + (tempH/4) + "px;}</style>");
+						temp_div_css.html("<style>#main_div_zaer_services{margin-top:" + (winH-tempH-100)/2 + "px !important}.select_service_type_btn{height: " + (tempH/4) + "px;}</style>");
 						//console.log("tempH:" + tempH);
 					}, 350);
 					
 					setTimeout(function(){
 						tempH		= $("#menu_zaer_services").height();
 						//temp_div.css("margin-top",(winH-tempH-50)/2);
-						all_css_placeholder.append("<style>#main_div_zaer_services{margin-top:" + (winH-tempH-100)/2 + "px !important}.select_service_type_btn{height: " + (tempH/4) + "px;}</style>");
+						temp_div_css.html("<style>#main_div_zaer_services{margin-top:" + (winH-tempH-100)/2 + "px !important}.select_service_type_btn{height: " + (tempH/4) + "px;}</style>");
 						//console.log("tempH:" + tempH);
 					}, 650);
 					
 					
 
 					page.querySelector('#goto_page_zaer_service_map').onclick = function() {
-						document.querySelector('#myNavigator').resetToPage('zaer_service_map.html', {animation: "slid",animationOptions:{delay: 0.4} });
+						document.querySelector('#myNavigator').pushPage('zaer_service_map.html', {animation: "slid",animationOptions:{delay: 0.4} });
 						/*
 						navigator.notification.alert(
 							multilang.get('Will_be_active_in_the_next_version'),  // message
@@ -2855,10 +2850,10 @@ alert("An error has occurred: Code = " + error.code);
 						*/
 					};
 					page.querySelector('#goto_page_zaer_service_map_mavakeb').onclick = function() {
-						document.querySelector('#myNavigator').resetToPage('zaer_service_map_mavakeb.html', {animation: "slid",animationOptions:{delay: 0.4} });
+						document.querySelector('#myNavigator').pushPage('zaer_service_map_mavakeb.html', {animation: "slid",animationOptions:{delay: 0.4} });
 					};
 					page.querySelector('#goto_page_zaer_service_missing_objects').onclick = function() {
-						document.querySelector('#myNavigator').resetToPage('zaer_service_missing_objects.html', {animation: "slid",animationOptions:{delay: 0.4} });
+						document.querySelector('#myNavigator').pushPage('zaer_service_missing_objects.html', {animation: "slid",animationOptions:{delay: 0.4} });
 					};
 					/*
 					page.querySelector('#goto_page_zaer_service_weather').onclick = function() {
@@ -2871,7 +2866,7 @@ alert("An error has occurred: Code = " + error.code);
 					};
 					*/
 					page.querySelector('#goto_page_zaer_service_news').onclick = function() {
-						document.querySelector('#myNavigator').resetToPage('news_list.html', {animation: "slid",animationOptions:{delay: 0.4} });
+						document.querySelector('#myNavigator').pushPage('news_list.html', {animation: "slid",animationOptions:{delay: 0.4} });
 					};
 			}
 			else if (page.id === 'zaer_service_map_mavakeb')
@@ -2882,19 +2877,19 @@ alert("An error has occurred: Code = " + error.code);
 					var temp_div		= $("#main_div_mukeb_map_menu");
 					var tempH			= $("#mukeb_map_menu_image").height();
 					temp_div_css		= $("#main_div_mukeb_map_menu_css_placeholder");
-					//all_css_placeholder.append("<style>#main_div_mukeb_map_menu{margin-top:" + (winH-tempH-50)/2 + "px !important}.select_mukeb_map_type_btn{height: " + (tempH/4) + "px;}</style>");
-					all_css_placeholder.append("<style>#main_div_mukeb_map_menu{margin-top:20% !important}.select_mukeb_map_type_btn{height: " + (tempH/4) + "px;}</style>");
+					//temp_div_css.html("<style>#main_div_mukeb_map_menu{margin-top:" + (winH-tempH-50)/2 + "px !important}.select_mukeb_map_type_btn{height: " + (tempH/4) + "px;}</style>");
+					temp_div_css.html("<style>#main_div_mukeb_map_menu{margin-top:20% !important}.select_mukeb_map_type_btn{height: " + (tempH/4) + "px;}</style>");
 					
 					setTimeout(function(){
 						tempH		= $("#mukeb_map_menu_image").height();
-						//all_css_placeholder.append("<style>#main_div_mukeb_map_menu{margin-top:" + (winH-tempH-50)/2 + "px !important}.select_mukeb_map_type_btn{height: " + (tempH/4) + "px;}</style>");
-						all_css_placeholder.append("<style>#main_div_mukeb_map_menu{margin-top:20% !important}.select_mukeb_map_type_btn{height: " + (tempH/4) + "px;}</style>");
+						//temp_div_css.html("<style>#main_div_mukeb_map_menu{margin-top:" + (winH-tempH-50)/2 + "px !important}.select_mukeb_map_type_btn{height: " + (tempH/4) + "px;}</style>");
+						temp_div_css.html("<style>#main_div_mukeb_map_menu{margin-top:20% !important}.select_mukeb_map_type_btn{height: " + (tempH/4) + "px;}</style>");
 					}, 350);
 					
 					setTimeout(function(){
 						tempH		= $("#mukeb_map_menu_image").height();
-						//all_css_placeholder.append("<style>#main_div_mukeb_map_menu{margin-top:" + (winH-tempH-50)/2 + "px !important}.select_mukeb_map_type_btn{height: " + (tempH/4) + "px;}</style>");
-						all_css_placeholder.append("<style>#main_div_mukeb_map_menu{margin-top:20% !important}.select_mukeb_map_type_btn{height: " + (tempH/4) + "px;}</style>");
+						//temp_div_css.html("<style>#main_div_mukeb_map_menu{margin-top:" + (winH-tempH-50)/2 + "px !important}.select_mukeb_map_type_btn{height: " + (tempH/4) + "px;}</style>");
+						temp_div_css.html("<style>#main_div_mukeb_map_menu{margin-top:20% !important}.select_mukeb_map_type_btn{height: " + (tempH/4) + "px;}</style>");
 					}, 650);
 
 					page.querySelector('#goto_page_mukeb_map_najaf').onclick = function() {
@@ -2942,19 +2937,19 @@ alert("An error has occurred: Code = " + error.code);
 					var temp_div		= $("#main_div_mukeb_map_menu");
 					var tempH			= $("#mukeb_map_menu_image").height();
 					temp_div_css		= $("#main_div_mukeb_map_menu_css_placeholder");
-					//all_css_placeholder.append("<style>#main_div_mukeb_map_menu{margin-top:" + (winH-tempH-50)/2 + "px !important}.select_mukeb_map_type_btn{height: " + (tempH/4) + "px;}</style>");
-					all_css_placeholder.append("<style>#main_div_mukeb_map_menu{margin-top:20% !important}.select_mukeb_map_type_btn{height: " + (tempH/4) + "px;}</style>");
+					//temp_div_css.html("<style>#main_div_mukeb_map_menu{margin-top:" + (winH-tempH-50)/2 + "px !important}.select_mukeb_map_type_btn{height: " + (tempH/4) + "px;}</style>");
+					temp_div_css.html("<style>#main_div_mukeb_map_menu{margin-top:20% !important}.select_mukeb_map_type_btn{height: " + (tempH/4) + "px;}</style>");
 					
 					setTimeout(function(){
 						tempH		= $("#mukeb_map_menu_image").height();
-						//all_css_placeholder.append("<style>#main_div_mukeb_map_menu{margin-top:" + (winH-tempH-50)/2 + "px !important}.select_mukeb_map_type_btn{height: " + (tempH/4) + "px;}</style>");
-						all_css_placeholder.append("<style>#main_div_mukeb_map_menu{margin-top:20% !important}.select_mukeb_map_type_btn{height: " + (tempH/4) + "px;}</style>");
+						//temp_div_css.html("<style>#main_div_mukeb_map_menu{margin-top:" + (winH-tempH-50)/2 + "px !important}.select_mukeb_map_type_btn{height: " + (tempH/4) + "px;}</style>");
+						temp_div_css.html("<style>#main_div_mukeb_map_menu{margin-top:20% !important}.select_mukeb_map_type_btn{height: " + (tempH/4) + "px;}</style>");
 					}, 350);
 					
 					setTimeout(function(){
 						tempH		= $("#mukeb_map_menu_image").height();
-						//all_css_placeholder.append("<style>#main_div_mukeb_map_menu{margin-top:" + (winH-tempH-50)/2 + "px !important}.select_mukeb_map_type_btn{height: " + (tempH/4) + "px;}</style>");
-						all_css_placeholder.append("<style>#main_div_mukeb_map_menu{margin-top:20% !important}.select_mukeb_map_type_btn{height: " + (tempH/4) + "px;}</style>");
+						//temp_div_css.html("<style>#main_div_mukeb_map_menu{margin-top:" + (winH-tempH-50)/2 + "px !important}.select_mukeb_map_type_btn{height: " + (tempH/4) + "px;}</style>");
+						temp_div_css.html("<style>#main_div_mukeb_map_menu{margin-top:20% !important}.select_mukeb_map_type_btn{height: " + (tempH/4) + "px;}</style>");
 					}, 650);
 
 					page.querySelector('#goto_page_mukeb_map_najaf').onclick = function() {
@@ -3002,19 +2997,19 @@ alert("An error has occurred: Code = " + error.code);
 					setTimeout(function(){
 						tempH			= $("#zaer_service_missing_objects_menu_image").height();
 						temp_div_css	= $("#zaer_service_missing_objects_menu_css_placeholder");
-						all_css_placeholder.append("<style>#zaer_service_missing_objects_menu{margin-top:" + (winH-tempH-100)/2 + "px !important}.zaer_service_missing_objects_btn{height: " + (tempH/2) + "px;}</style>");
+						temp_div_css.html("<style>#zaer_service_missing_objects_menu{margin-top:" + (winH-tempH-100)/2 + "px !important}.zaer_service_missing_objects_btn{height: " + (tempH/2) + "px;}</style>");
 					}, 300);
 					
 					setTimeout(function(){
 						tempH			= $("#zaer_service_missing_objects_menu_image").height();
 						temp_div_css	= $("#zaer_service_missing_objects_menu_css_placeholder");
-						all_css_placeholder.append("<style>#zaer_service_missing_objects_menu{margin-top:" + (winH-tempH-100)/2 + "px !important}.zaer_service_missing_objects_btn{height: " + (tempH/2) + "px;}</style>");
+						temp_div_css.html("<style>#zaer_service_missing_objects_menu{margin-top:" + (winH-tempH-100)/2 + "px !important}.zaer_service_missing_objects_btn{height: " + (tempH/2) + "px;}</style>");
 					}, 600);
 					/*
 					setTimeout(function(){
 						tempH			= $("#zaer_service_missing_objects_menu_image").height();
 						temp_div_css	= $("#zaer_service_missing_objects_menu_css_placeholder");
-						all_css_placeholder.append("<style>#zaer_service_missing_objects_menu{margin-top:" + (winH-tempH-50)/2 + "px !important}.zaer_service_missing_objects_btn{height: " + (tempH/2) + "px;}</style>");
+						temp_div_css.html("<style>#zaer_service_missing_objects_menu{margin-top:" + (winH-tempH-50)/2 + "px !important}.zaer_service_missing_objects_btn{height: " + (tempH/2) + "px;}</style>");
 					}, 350);
 					*/
 					
@@ -3023,14 +3018,14 @@ alert("An error has occurred: Code = " + error.code);
 						if (networkState == Connection.NONE)
 							need_internet();
 						else
-							document.querySelector('#myNavigator').resetToPage('zaer_service_I_Lost_Something.html', {animation: "slid",animationOptions:{delay: 0.4} });
+							document.querySelector('#myNavigator').pushPage('zaer_service_I_Lost_Something.html', {animation: "slid",animationOptions:{delay: 0.4} });
 					};
 					page.querySelector('#goto_page_zaer_service_missing_objects_found').onclick = function() {
 						var networkState = navigator.connection.type;
 						if (networkState == Connection.NONE)
 							need_internet();
 						else
-							document.querySelector('#myNavigator').resetToPage('zaer_service_I_Found_Something.html', {animation: "slid",animationOptions:{delay: 0.4} });
+							document.querySelector('#myNavigator').pushPage('zaer_service_I_Found_Something.html', {animation: "slid",animationOptions:{delay: 0.4} });
 					};
 			}
 			else if (page.id === 'zaer_service_I_Found_Something')
@@ -3040,7 +3035,7 @@ alert("An error has occurred: Code = " + error.code);
 
 					page.querySelector('#goto_page_zaer_service_missing_objects_found_submit_data').onclick = function() {
 						window.sessionStorage.setItem("goto_missing_objects_from","zaer");
-						document.querySelector('#myNavigator').resetToPage('zaer_service_I_Found_Something_data_entry.html', {animation: "slid",animationOptions:{delay: 0.4} });
+						document.querySelector('#myNavigator').pushPage('zaer_service_I_Found_Something_data_entry.html', {animation: "slid",animationOptions:{delay: 0.4} });
 					};
 			}
 			else if (page.id === 'zaer_service_I_Found_Something_data_entry')
@@ -3161,7 +3156,7 @@ alert("An error has occurred: Code = " + error.code);
 							show_progress_bar("with_cancel_btn");
 							submit_missing_data_by_image();
 						}
-						//document.querySelector('#myNavigator').resetToPage('zaer_service_I_Found_Something_data_entry.html', {animation: "slid",animationOptions:{delay: 0.4} });
+						//document.querySelector('#myNavigator').pushPage('zaer_service_I_Found_Something_data_entry.html', {animation: "slid",animationOptions:{delay: 0.4} });
 					};
 			}
 			else if (page.id === 'register_mukeb')
@@ -3174,9 +3169,9 @@ alert("An error has occurred: Code = " + error.code);
 					if(window.localStorage.getItem('token') != null)
 					{
 						if(window.localStorage.getItem('capacity_man')=="null" && window.localStorage.getItem('capacity_woman')=="null")
-							document.querySelector('#myNavigator').resetToPage('edit_mukeb_data.html', {animation: "slid",animationOptions:{delay: 0.4} });
+							document.querySelector('#myNavigator').pushPage('edit_mukeb_data.html', {animation: "slid",animationOptions:{delay: 0.4} });
 						else
-							document.querySelector('#myNavigator').resetToPage('mukeb_manager_menu.html', {animation: "slid",animationOptions:{delay: 0.4} });
+							document.querySelector('#myNavigator').pushPage('mukeb_manager_menu.html', {animation: "slid",animationOptions:{delay: 0.4} });
 					}
 					else
 						auto_login("change_page");
@@ -3280,7 +3275,7 @@ alert("An error has occurred: Code = " + error.code);
 							
 							
 
-							//document.querySelector('#myNavigator').resetToPage('forgot_pasword_mukeb_manager_login.html', {animation: "slid",animationOptions:{delay: 0.4} });
+							//document.querySelector('#myNavigator').pushPage('forgot_pasword_mukeb_manager_login.html', {animation: "slid",animationOptions:{delay: 0.4} });
 						};
 					}, 300);
 			}
@@ -3364,7 +3359,7 @@ alert("An error has occurred: Code = " + error.code);
 						}
 
 						if(window.localStorage.getItem('capacity_man')=="null" && window.localStorage.getItem('capacity_woman')=="null")
-							document.querySelector('#myNavigator').resetToPage('edit_mukeb_data.html', {animation: "slid",animationOptions:{delay: 0.4} });
+							document.querySelector('#myNavigator').pushPage('edit_mukeb_data.html', {animation: "slid",animationOptions:{delay: 0.4} });
 					}, 350);
 					
 					check_retina();
@@ -3374,19 +3369,19 @@ alert("An error has occurred: Code = " + error.code);
 					var tempH			= $("#menu_mukeb_manager_menu").height();
 					//temp_div.css("margin-top",(winH-tempH-50)/2);
 					temp_div_css	= $("#main_div_mukeb_manager_menu_css_placeholder");
-					all_css_placeholder.append("<style>#main_div_mukeb_manager_menu{margin-top:" + (winH-tempH-100)/2 + "px !important} .select_mukeb_manager_service_type_btn{height: " + (tempH/4) + "px;}</style>");
+					temp_div_css.html("<style>#main_div_mukeb_manager_menu{margin-top:" + (winH-tempH-100)/2 + "px !important} .select_mukeb_manager_service_type_btn{height: " + (tempH/4) + "px;}</style>");
 					
 					setTimeout(function(){
 						tempH		= $("#menu_mukeb_manager_menu").height();
 						//temp_div.css("margin-top",(winH-tempH-50)/2);
-						all_css_placeholder.append("<style>#main_div_mukeb_manager_menu{margin-top:" + (winH-tempH-100)/2 + "px !important} .select_mukeb_manager_service_type_btn{height: " + (tempH/4) + "px;}</style>");
+						temp_div_css.html("<style>#main_div_mukeb_manager_menu{margin-top:" + (winH-tempH-100)/2 + "px !important} .select_mukeb_manager_service_type_btn{height: " + (tempH/4) + "px;}</style>");
 						//console.log("tempH:" + tempH);
 					}, 350);
 					
 					setTimeout(function(){
 						tempH		= $("#menu_mukeb_manager_menu").height();
 						//temp_div.css("margin-top",(winH-tempH-50)/2);
-						all_css_placeholder.append("<style>#main_div_mukeb_manager_menu{margin-top:" + (winH-tempH-100)/2 + "px !important} .select_mukeb_manager_service_type_btn{height: " + (tempH/4) + "px;}</style>");
+						temp_div_css.html("<style>#main_div_mukeb_manager_menu{margin-top:" + (winH-tempH-100)/2 + "px !important} .select_mukeb_manager_service_type_btn{height: " + (tempH/4) + "px;}</style>");
 						//console.log("tempH:" + tempH);
 					}, 650);
 					
@@ -3396,14 +3391,14 @@ alert("An error has occurred: Code = " + error.code);
 					};
 					page.querySelector('#goto_page_mukeb_found_object').onclick = function() {
 						window.sessionStorage.setItem("goto_missing_objects_from","mukeb");
-						document.querySelector('#myNavigator').resetToPage('zaer_service_I_Found_Something_data_entry.html', {animation: "slid",animationOptions:{delay: 0.4} });
+						document.querySelector('#myNavigator').pushPage('zaer_service_I_Found_Something_data_entry.html', {animation: "slid",animationOptions:{delay: 0.4} });
 					};
 					page.querySelector('#goto_page_mukeb_edit_data').onclick = function() {
-						document.querySelector('#myNavigator').resetToPage('edit_mukeb_data.html', {animation: "slid",animationOptions:{delay: 0.4} });
+						document.querySelector('#myNavigator').pushPage('edit_mukeb_data.html', {animation: "slid",animationOptions:{delay: 0.4} });
 					};
 					/*
 					page.querySelector('#goto_page_mukeb_service_weather').onclick = function() {
-						//document.querySelector('#myNavigator').resetToPage('mukeb_manager_menu.html', {animation: "slid",animationOptions:{delay: 0.4} });
+						//document.querySelector('#myNavigator').pushPage('mukeb_manager_menu.html', {animation: "slid",animationOptions:{delay: 0.4} });
 						navigator.notification.alert(
 							multilang.get('Will_be_active_in_the_next_version'),  // message
 							alertDismissed,		 // callback
@@ -3413,7 +3408,7 @@ alert("An error has occurred: Code = " + error.code);
 					};
 					*/
 					page.querySelector('#goto_page_mukeb_news').onclick = function() {
-						document.querySelector('#myNavigator').resetToPage('news_list_Mukeb.html', {animation: "slid",animationOptions:{delay: 0.4} });
+						document.querySelector('#myNavigator').pushPage('news_list_Mukeb.html', {animation: "slid",animationOptions:{delay: 0.4} });
 					};
 			}
 			else if (page.id === 'zaer_service_I_Lost_Something')
@@ -3778,7 +3773,7 @@ alert("An error has occurred: Code = " + error.code);
 	
 	<ons-template id="homePage.html">
 		<ons-page id="homePage">
-			<ons-navigator id="myNavigator" var="myNavigator" page="home.html" swipe-target-width="50px" swipeable222></ons-navigator>
+			<ons-navigator id="myNavigator" var="myNavigator" page="home.html" swipe-target-width="50px" swipeable></ons-navigator>
 		</ons-page>
 	</ons-template>
 	
@@ -3884,7 +3879,7 @@ alert("An error has occurred: Code = " + error.code);
 					</div>
 					<div class="center need_translate" translate=""></div>
 					<div class="left">
-						<ons-toolbar-button onclick="document.querySelector('#myNavigator').resetToPage('select_user_type.html', {animation: 'reversedSlide',animationOptions:{delay: 0.4} });">
+						<ons-toolbar-button onclick="document.querySelector('#myNavigator').pushPage('select_user_type.html', {animation: 'reversedSlide',animationOptions:{delay: 0.4} });">
 							<span class="back-button__icon">
 								<svg width="13px" height="21px" viewBox="0 0 13 21" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><title>ios-back-button-icon</title><desc>Created with Sketch.</desc><defs></defs><g id="__3_inCE7__toolbar-back-button" stroke="none" stroke-width="1" fill-rule="evenodd"><g id="__3_inCE7__ios" transform="translate(-34.000000, -30.000000)"><polygon id="__3_inCE7__ios-back-button-icon" points="34 40.5 44.5 30 46.5 32 38 40.5 46.5 49 44.5 51"></polygon></g></g></svg>
 							</span>
@@ -3918,7 +3913,7 @@ alert("An error has occurred: Code = " + error.code);
 				</div>
 				<div class="center need_translate" translate="Tents_Positions"></div>
 				<div class="left">
-					<ons-toolbar-button onclick="document.querySelector('#myNavigator').resetToPage('zaer_services.html', {animation: 'reversedSlide',animationOptions:{delay: 0.4} });">
+					<ons-toolbar-button onclick="document.querySelector('#myNavigator').pushPage('zaer_services.html', {animation: 'reversedSlide',animationOptions:{delay: 0.4} });">
 						<span class="back-button__icon">
 							<svg width="13px" height="21px" viewBox="0 0 13 21" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><title>ios-back-button-icon</title><desc>Created with Sketch.</desc><defs></defs><g id="__3_inCE7__toolbar-back-button" stroke="none" stroke-width="1" fill-rule="evenodd"><g id="__3_inCE7__ios" transform="translate(-34.000000, -30.000000)"><polygon id="__3_inCE7__ios-back-button-icon" points="34 40.5 44.5 30 46.5 32 38 40.5 46.5 49 44.5 51"></polygon></g></g></svg>
 						</span>
@@ -3957,7 +3952,7 @@ alert("An error has occurred: Code = " + error.code);
 				</div>
 				<div class="center need_translate" translate="Trip_Map"></div>
 				<div class="left">
-					<ons-toolbar-button onclick="document.querySelector('#myNavigator').resetToPage('zaer_services.html', {animation: 'reversedSlide',animationOptions:{delay: 0.4} });">
+					<ons-toolbar-button onclick="document.querySelector('#myNavigator').pushPage('zaer_services.html', {animation: 'reversedSlide',animationOptions:{delay: 0.4} });">
 						<span class="back-button__icon">
 							<svg width="13px" height="21px" viewBox="0 0 13 21" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><title>ios-back-button-icon</title><desc>Created with Sketch.</desc><defs></defs><g id="__3_inCE7__toolbar-back-button" stroke="none" stroke-width="1" fill-rule="evenodd"><g id="__3_inCE7__ios" transform="translate(-34.000000, -30.000000)"><polygon id="__3_inCE7__ios-back-button-icon" points="34 40.5 44.5 30 46.5 32 38 40.5 46.5 49 44.5 51"></polygon></g></g></svg>
 						</span>
@@ -4051,7 +4046,7 @@ alert("An error has occurred: Code = " + error.code);
 				<div class="center need_translate" translate="mukeb_information"></div>
 				<div class="left">
 					<!--<ons-back-button class="need_translate_toolbar_btn" translate="Back" >Back</ons-back-button>-->
-					<!-- <ons-toolbar-button onclick="document.querySelector('#myNavigator').resetToPage('zaer_service_missing_objects.html', {animation: 'slid',animationOptions:{delay: 0.4} });"> -->
+					<!-- <ons-toolbar-button onclick="document.querySelector('#myNavigator').pushPage('zaer_service_missing_objects.html', {animation: 'slid',animationOptions:{delay: 0.4} });"> -->
 					<ons-toolbar-button onclick="go_back_from_missing_object_data_entry();">
 						<span class="back-button__icon">
 							<svg width="13px" height="21px" viewBox="0 0 13 21" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><title>ios-back-button-icon</title><desc>Created with Sketch.</desc><defs></defs><g id="__3_inCE7__toolbar-back-button" stroke="none" stroke-width="1" fill-rule="evenodd"><g id="__3_inCE7__ios" transform="translate(-34.000000, -30.000000)"><polygon id="__3_inCE7__ios-back-button-icon" points="34 40.5 44.5 30 46.5 32 38 40.5 46.5 49 44.5 51"></polygon></g></g></svg>
@@ -4270,7 +4265,7 @@ alert("An error has occurred: Code = " + error.code);
 				<div class="center need_translate" translate="mukeb_information"></div>
 				<div class="left">
 					<!--<ons-back-button class="need_translate_toolbar_btn" translate="Back" >Back</ons-back-button>-->
-					<ons-toolbar-button onclick="document.querySelector('#myNavigator').resetToPage('mukeb_manager_menu.html', {animation: 'reversedSlide',animationOptions:{delay: 0.4} });">
+					<ons-toolbar-button onclick="document.querySelector('#myNavigator').pushPage('mukeb_manager_menu.html', {animation: 'reversedSlide',animationOptions:{delay: 0.4} });">
 						<span class="back-button__icon">
 							<svg width="13px" height="21px" viewBox="0 0 13 21" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><title>ios-back-button-icon</title><desc>Created with Sketch.</desc><defs></defs><g id="__3_inCE7__toolbar-back-button" stroke="none" stroke-width="1" fill-rule="evenodd"><g id="__3_inCE7__ios" transform="translate(-34.000000, -30.000000)"><polygon id="__3_inCE7__ios-back-button-icon" points="34 40.5 44.5 30 46.5 32 38 40.5 46.5 49 44.5 51"></polygon></g></g></svg>
 						</span>
@@ -4425,7 +4420,7 @@ alert("An error has occurred: Code = " + error.code);
 					</div>
 					<div class="center need_translate" translate="mukeb_information"></div>
 					<div class="left">
-						<ons-toolbar-button onclick="document.querySelector('#myNavigator').resetToPage('select_user_type.html', {animation: 'reversedSlide',animationOptions:{delay: 0.4} });">
+						<ons-toolbar-button onclick="document.querySelector('#myNavigator').pushPage('select_user_type.html', {animation: 'reversedSlide',animationOptions:{delay: 0.4} });">
 							<span class="back-button__icon">
 								<svg width="13px" height="21px" viewBox="0 0 13 21" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><title>ios-back-button-icon</title><desc>Created with Sketch.</desc><defs></defs><g id="__3_inCE7__toolbar-back-button" stroke="none" stroke-width="1" fill-rule="evenodd"><g id="__3_inCE7__ios" transform="translate(-34.000000, -30.000000)"><polygon id="__3_inCE7__ios-back-button-icon" points="34 40.5 44.5 30 46.5 32 38 40.5 46.5 49 44.5 51"></polygon></g></g></svg>
 							</span>
@@ -4521,7 +4516,7 @@ alert("An error has occurred: Code = " + error.code);
 				</div>
 				<div class="center need_translate" translate="News"></div>
 				<div class="left">
-					<ons-toolbar-button onclick="document.querySelector('#myNavigator').resetToPage('zaer_services.html', {animation: 'reversedSlide',animationOptions:{delay: 0.4} });">
+					<ons-toolbar-button onclick="document.querySelector('#myNavigator').pushPage('zaer_services.html', {animation: 'reversedSlide',animationOptions:{delay: 0.4} });">
 						<span class="back-button__icon">
 							<svg width="13px" height="21px" viewBox="0 0 13 21" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><title>ios-back-button-icon</title><desc>Created with Sketch.</desc><defs></defs><g id="__3_inCE7__toolbar-back-button" stroke="none" stroke-width="1" fill-rule="evenodd"><g id="__3_inCE7__ios" transform="translate(-34.000000, -30.000000)"><polygon id="__3_inCE7__ios-back-button-icon" points="34 40.5 44.5 30 46.5 32 38 40.5 46.5 49 44.5 51"></polygon></g></g></svg>
 						</span>
@@ -4548,7 +4543,7 @@ alert("An error has occurred: Code = " + error.code);
 				</div>
 				<div class="center need_translate" translate="News"></div>
 				<div class="left">
-					<ons-toolbar-button onclick="document.querySelector('#myNavigator').resetToPage('mukeb_manager_menu.html', {animation: 'reversedSlide',animationOptions:{delay: 0.4} });">
+					<ons-toolbar-button onclick="document.querySelector('#myNavigator').pushPage('mukeb_manager_menu.html', {animation: 'reversedSlide',animationOptions:{delay: 0.4} });">
 						<span class="back-button__icon">
 							<svg width="13px" height="21px" viewBox="0 0 13 21" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><title>ios-back-button-icon</title><desc>Created with Sketch.</desc><defs></defs><g id="__3_inCE7__toolbar-back-button" stroke="none" stroke-width="1" fill-rule="evenodd"><g id="__3_inCE7__ios" transform="translate(-34.000000, -30.000000)"><polygon id="__3_inCE7__ios-back-button-icon" points="34 40.5 44.5 30 46.5 32 38 40.5 46.5 49 44.5 51"></polygon></g></g></svg>
 						</span>
@@ -4966,7 +4961,7 @@ function update_remaining_capacity(){
 	  Map points is updated!
 	  <!-- <button onclick="toast_update.hide()">ok</button> -->
 	</ons-toast>
-	<div id="all_css_placeholder"></div>
+
 </body>
 </html>
   
